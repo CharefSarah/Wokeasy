@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <title>Wokeasy | Inspirations</title>
+        <!-- Amélioration SEO : description -->
+        <meta
+            name="description"
+            content="Wokeasy offre des ressources triées sur le volet pour les développeurs et designers afin de travailler plus intelligemment." />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="stylesheet" href="assets/css/style.css" />
+        <link rel="stylesheet" href="assets/css/grid.css" />
+    </head>
+
+    <body class="body__inspiration">
+
+        <!-- NAVIGATION -->
+        <nav class="nav__bar nav__bar__inspiration">
+            <!-- Partie gauche du nav -->
+            <div class="nav__bar__left">
+                <h1 class="site__title">
+                    <a href="index.html" class="site__title__link"
+                        aria-label="Accueil Wokeasy">
+                        <!-- Logo principal -->
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="24"
+                            height="24"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            class="lucide lucide-grip">
+                            <circle cx="12" cy="5" r="1"></circle>
+                            <circle cx="19" cy="5" r="1"></circle>
+                            <circle cx="5" cy="5" r="1"></circle>
+                            <circle cx="12" cy="12" r="1"></circle>
+                            <circle cx="19" cy="12" r="1"></circle>
+                            <circle cx="5" cy="12" r="1"></circle>
+                            <circle cx="12" cy="19" r="1"></circle>
+                            <circle cx="19" cy="19" r="1"></circle>
+                            <circle cx="5" cy="19" r="1"></circle>
+                        </svg>
+                        Wokeasy
+                    </a>
+                </h1>
+            </div>
+
+            <!-- Partie droite du nav -->
+            <div class="nav__bar__right">
+                <ul class="nav__links">
+
+                    <li class="nav__links__item">
+                        <a href="#" class="nav__links__link">About</a>
+                    </li>
+                    <li class="nav__links__item">
+                        <a href="#" class="nav__links__link">Contact</a>
+                    </li>
+                </ul>
+
+                <!-- Search -->
+                <div class="search__container">
+                    <label>
+                        <input
+                            type="text"
+                            id="search__input"
+                            class="search__input"
+                            placeholder="'/' pour voir les commandes..."
+                            autocomplete="off" />
+                    </label>
+                    <div id="search__suggestions"
+                        class="search__suggestions"></div>
+                    <span class="search__trigger" tabindex="0">
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="14"
+                            height="14"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="1"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            class="lucide lucide-command">
+                            <path
+                                d="M15 6v12a3 3 0 1 0 3-3H6a3 3 0 1 0 3 3V6a3 3 0 1 0-3 3h12a3 3 0 1 0-3-3"></path>
+                        </svg>
+                        + K
+                    </span>
+
+                </div>
+
+                <!-- Bouton de changement de thème -->
+                <button
+                    class="theme__toggle"
+                    id="theme__button"
+                    aria-label="Changer de thème">
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="var(--clr__accent)"
+                        stroke-width="1"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        class="lucide lucide-sun">
+                        <circle cx="12" cy="12" r="4"></circle>
+                        <path d="M12 2v2"></path>
+                        <path d="M12 20v2"></path>
+                        <path d="m4.93 4.93 1.41 1.41"></path>
+                        <path d="m17.66 17.66 1.41 1.41"></path>
+                        <path d="M2 12h2"></path>
+                        <path d="M20 12h2"></path>
+                        <path d="m6.34 17.66-1.41 1.41"></path>
+                        <path d="m19.07 4.93-1.41 1.41"></path>
+                    </svg>
+                </button>
+                <div class="avatar__wrapper" id="profileButton">
+                    <img
+                        src="assets/images/avatar.png"
+                        alt="Mon Profil"
+                        class="avatar__image" />
+                </div>
+                <!-- Menu déroulant du profil -->
+                <div class="profile__dropdown" id="profileDropdown">
+                    <ul class="profile__dropdown__list">
+                        <!-- Liens “généraux” -->
+                        <li><a href="#resources">Ressources</a></li>
+                        <li><a href="inspiration.html">Inspiration</a></li>
+
+                        <!-- Séparateur -->
+                        <li class="profile__dropdown__divider"></li>
+
+                        <!-- Liens “Profil” -->
+                        <li><a href="#favorites">Mes Favoris</a></li>
+                        <li><a href="#projects">Mes Projets</a></li>
+                        <li><a href="#settings">Paramètres du
+                                profil</a></li>
+                        <li class="profile__dropdown__divider"></li>
+                        <li><a href="#favorites">Log Out</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <!-- NAV existante (tu la conserves telle qu'elle est) -->
+        <header class="nav__bar">
+            <div class="nav__bar__left">
+                <!-- ton logo, etc. -->
+            </div>
+            <div class="nav__bar__right">
+                <!-- liens About / Contact, search__container, theme toggle, avatar, etc. -->
+            </div>
+        </header>
+
+        <!-- SECTION INSPIRATION -->
+        <section>
+
+            <div class="nav__bar__inspiration__grid">
+                <div class="search__container search__container__grid">
+
+                    <!-- Champ de recherche -->
+                    <div class="search-bar">
+                        <input
+                            type="text"
+                            autocomplete="off"
+                            id="searchInput"
+                            placeholder="Rechercher dans la galerie..." />
+                    </div>
+
+                    <!-- Barre de catégories -->
+                    <nav class="categories__bar">
+
+                        <div class="filters-container">
+                            <!-- Filtres de catégorie -->
+                            <div class="filter-group"
+                                id="categoryFilters"></div>
+                        </nav>
+
+                    </div>
+                </div>
+                <div class="gallery" id="galleryContainer"></div>
+
+                <!-- MODALE DE RECHERCHE -->
+                <div id="searchModal" class="modal">
+                    <div class="modal__overlay"></div>
+                    <div class="modal__content">
+                        <div class="modal__container">
+                            <input
+                                type="text"
+                                id="modalSearchInput"
+                                class="modal__input"
+                                placeholder="Search..." />
+                            <button id="modalClose" class="modal__close"
+                                aria-label="Fermer la fenêtre">
+                                ✖
+                            </button>
+                        </div>
+                        <div id="modalSuggestions"
+                            class="modal__suggestions"></div>
+                    </div>
+                </div>
+                <!-- FIN MODALE DE RECHERCHE -->
+
+                <!-- ICONES LUCIDE -->
+                <script src="https://unpkg.com/lucide@latest"></script>
+                <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        lucide.createIcons();
+      });
+    </script>
+
+                <!-- TON FICHIER JS -->
+
+                <script src="assets/js/app.js" defer></script>
+                <script src="assets/js/grid.js" defer></script>
+            </body>
+        </html>

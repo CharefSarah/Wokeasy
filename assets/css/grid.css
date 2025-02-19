@@ -1,0 +1,242 @@
+/* ------------------------------------- */
+/* -------------- RESET ---------------- */
+/* ------------------------------------- */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* ------------------------------------- */
+/* -------------- FONTS ---------------- */
+/* ------------------------------------- */
+
+@font-face {
+  font-family: "PPValve";
+  src: url("../fonts/PPValve-PlainExtralight.otf");
+}
+@font-face {
+  font-family: "PPMachina";
+  src: url("../fonts/PPNeueMachina-PlainLight.otf");
+}
+
+/* ------------------------------------- */
+/* -------------- body ---------------- */
+/* ------------------------------------- */
+
+.body__inspiration {
+  padding-inline: var(--spacing__lg);
+}
+.search__container__grid {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+.body__inspiration #searchInput {
+  gap: var(--spacing__sm);
+}
+
+#searchInput {
+  all: unset;
+  width: 100%;
+  padding: var(--spacing__xs) var(--spacing__sm);
+  border-radius: 6px;
+  border: 1px solid var(--clr__text-fade);
+  background-color: var(--clr__button-bg);
+  color: var(--clr__text);
+  font-family: var(--font__secondary);
+}
+#searchInput::placeholder {
+  color: var(--clr__accent);
+}
+
+#searchInput:hover,
+#searchInput:focus {
+  outline: none;
+  color: var(--clr__text);
+}
+.gallery {
+  display: grid;
+  width: 100%;
+  padding-block: 0;
+  grid-template-columns: repeat(4, 1fr);
+  grid-auto-rows: minmax(30vh, auto);
+  padding-block: var(--spacing__lg);
+  gap: var(--spacing__md);
+}
+
+/* Sur tablette (~max-width: 1024px) : 3 colonnes */
+@media (max-width: 1024px) {
+  .gallery {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* Sur mobile (~max-width: 600px) : 2 colonnes */
+@media (max-width: 600px) {
+  .gallery {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.gallery .card {
+  background-color: var(--clr__button-bg);
+  border: 1px solid var(--clr__text-fade);
+  border-radius: 16px;
+  overflow: hidden;
+  width: auto;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Media dans la card (video ou image) */
+.gallery .card__media {
+  position: relative;
+  width: 100%;
+  height: 80%;
+  border-radius: 12px;
+  background-color: var(--clr__accent);
+}
+
+.gallery .card__media video,
+.gallery .card__media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 12px;
+  aspect-ratio: 1.1;
+  user-select: none !important;
+  pointer-events: none !important;
+}
+
+video::-webkit-media-controls {
+  display: none !important;
+}
+
+/* Lien de bookmarking (en haut à droite) */
+.gallery .card__bookmark {
+  position: absolute;
+  top: var(--spacing__xs);
+  right: var(--spacing__xs);
+  padding: var(--spacing__xs);
+  border-radius: 6px;
+  border: 1px solid var(--clr__text-fade);
+  background-color: var(--clr__button-bg);
+  color: var(--clr__accent);
+  text-decoration: none;
+}
+.gallery .card__bookmark:hover {
+  color: var(--clr__text);
+}
+
+.card__bookmark {
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.card:hover .card__bookmark {
+  opacity: 1;
+}
+
+/* Contenu texte de la card */
+.gallery .card__content {
+  width: 100%;
+  height: 20%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: var(--spacing__xs);
+  padding: var(--spacing__xs);
+  font-family: "PPValve" !important;
+}
+
+.gallery .card__content .card__logo {
+  height: 20px !important;
+  width: 20px !important;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.gallery .card__content .card__logo img {
+  height: 20px !important;
+  width: 20px !important;
+  aspect-ratio: 1;
+  border-radius: 999px;
+}
+
+.card__app {
+  grid-row: span 2;
+  height: 100% !important;
+}
+/* Media dans la card (video ou image) */
+.card__app .card__media {
+  position: relative;
+  width: 100%;
+  height: 100% !important;
+  border-radius: 12px;
+}
+
+.card__app .card__content {
+  width: 100%;
+  height: 10% !important;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: var(--spacing__xs);
+  padding: var(--spacing__xs);
+}
+
+.gallery .card__media video,
+.gallery .card__media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 12px;
+  user-select: none !important;
+  pointer-events: none !important;
+}
+
+/* ----- Filtres (catégories) & barre de recherche ----- */
+.categories__bar {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+.filters-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing__xs);
+  align-items: center;
+}
+
+.filter-group {
+  display: flex;
+  gap: var(--spacing__sm);
+  flex-wrap: wrap;
+  margin-left: var(--spacing__sm);
+}
+
+.filter-btn {
+  background-color: var(--clr__button-bg);
+  color: var(--clr__text);
+  border: 1px solid var(--clr__text-fade);
+  border-radius: 6px;
+  padding: var(--spacing__xs) 12px;
+  cursor: pointer;
+  user-select: none;
+}
+.filter-btn.active,
+.filter-btn:hover {
+  color: var(--clr__text);
+  background-color: var(--clr__text-fade);
+}
+.filter-btn span {
+  color: var(--clr__accent);
+  margin-left: 0.2rem;
+}

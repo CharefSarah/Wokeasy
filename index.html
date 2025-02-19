@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <title>Wokeasy</title>
+        <!-- Amélioration SEO : description -->
+        <meta
+            name="description"
+            content="Wokeasy offre des ressources triées sur le volet pour les développeurs et designers afin de travailler plus intelligemment." />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="stylesheet" href="assets/css/style.css" />
+    </head>
+
+    <body>
+        <header class="header__wrapper">
+            <!-- NAVIGATION -->
+            <nav class="nav__bar">
+                <!-- Partie gauche du nav -->
+                <div class="nav__bar__left">
+                    <h1 class="site__title">
+                        <a href="index.html" class="site__title__link"
+                            aria-label="Accueil Wokeasy">
+                            <!-- Logo principal -->
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                width="24"
+                                height="24"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="2"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                class="lucide lucide-grip">
+                                <circle cx="12" cy="5" r="1"></circle>
+                                <circle cx="19" cy="5" r="1"></circle>
+                                <circle cx="5" cy="5" r="1"></circle>
+                                <circle cx="12" cy="12" r="1"></circle>
+                                <circle cx="19" cy="12" r="1"></circle>
+                                <circle cx="5" cy="12" r="1"></circle>
+                                <circle cx="12" cy="19" r="1"></circle>
+                                <circle cx="19" cy="19" r="1"></circle>
+                                <circle cx="5" cy="19" r="1"></circle>
+                            </svg>
+                            Wokeasy
+                        </a>
+                    </h1>
+                </div>
+
+                <!-- Partie droite du nav -->
+                <div class="nav__bar__right">
+                    <ul class="nav__links">
+
+                        <li class="nav__links__item">
+                            <a href="#" class="nav__links__link">Ressources</a>
+                        </li>
+                        <li class="nav__links__item">
+                            <a href="inspiration.html"
+                                class="nav__links__link">Inspirations</a>
+                        </li>
+
+                        <li class="nav__links__item">
+                            <a href="#" class="nav__links__link">About</a>
+                        </li>
+                        <li class="nav__links__item">
+                            <a href="#" class="nav__links__link">Contact</a>
+                        </li>
+                    </ul>
+
+                    <!-- Bouton de changement de thème -->
+                    <button
+                        class="theme__toggle"
+                        id="theme__button"
+                        aria-label="Changer de thème">
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="var(--clr__accent)"
+                            stroke-width="1"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            class="lucide lucide-sun">
+                            <circle cx="12" cy="12" r="4"></circle>
+                            <path d="M12 2v2"></path>
+                            <path d="M12 20v2"></path>
+                            <path d="m4.93 4.93 1.41 1.41"></path>
+                            <path d="m17.66 17.66 1.41 1.41"></path>
+                            <path d="M2 12h2"></path>
+                            <path d="M20 12h2"></path>
+                            <path d="m6.34 17.66-1.41 1.41"></path>
+                            <path d="m19.07 4.93-1.41 1.41"></path>
+                        </svg>
+                    </button>
+                    <div class="avatar__wrapper" id="profileButton">
+                        <img
+                            src="assets/images/avatar.png"
+                            alt="Mon Profil"
+                            class="avatar__image" />
+                    </div>
+                    <!-- Menu déroulant du profil -->
+                    <div class="profile__dropdown" id="profileDropdown">
+                        <ul class="profile__dropdown__list">
+                            <!-- Liens “généraux” -->
+                            <li><a href="#resources">Ressources</a></li>
+                            <li><a href="inspiration.html">Inspirations</a></li>
+
+                            <!-- Séparateur -->
+                            <li class="profile__dropdown__divider"></li>
+
+                            <!-- Liens “Profil” -->
+                            <li><a href="#favorites">Bookmarks</a></li>
+                            <li><a href="#projects">Projects</a></li>
+                            <li><a href="#settings">settings</a></li>
+                            <li class="profile__dropdown__divider"></li>
+                            <li><a href="#favorites">Log Out</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+            <!-- FIN NAVIGATION -->
+
+            <!-- HEADER CONTENT -->
+            <div class="header__container">
+                <!-- Partie gauche du header -->
+                <div class="header__container__left">
+                    <h2 class="header__subtitle">For developper &amp;
+                        designer</h2>
+                    <h3 class="header__title">Work smarter not harder</h3>
+                    <p class="header__description">
+                        Explore curated and handpicked goodies that enhance your
+                        workflow
+                        and cultivate your growth as a developer and designer.
+                    </p>
+                </div>
+
+                <!-- Partie droite du header (cards) -->
+                <div class="header__container__right">
+                    <div class="cards__container">
+                        <div class="card">
+                            <div class="card__media">
+                                <a
+                                    href="https://www.rebrand.gallery/bentos"
+                                    target="_blank"
+                                    class="card__bookmark"
+                                    aria-label="Voir Rebrand">
+                                    <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        width="18"
+                                        height="18"
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        stroke-width="1"
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        class="lucide lucide-bookmark">
+                                        <path
+                                            d="m19 21-7-4-7 4V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16z"></path>
+                                    </svg>
+                                </a>
+                                <video loading="lazy" controls="false" autoplay
+                                    loop muted>
+                                    <source src="assets/images/bynder.mp4"
+                                        type="video/mp4" />
+                                    Your browser does not support the video tag.
+                                </video>
+                            </div>
+                            <div class="card__content">
+                                <div class="card__logo">
+                                    <img loading="lazy"
+                                        src="assets/images/apple-icon.png"
+                                        alt="Logo du projet Rebrand" />
+                                </div>
+                                <h4 class="card__name">
+                                    <a
+                                        href="https://www.rebrand.gallery/bentos"
+                                        target="_blank">Rebrand</a>
+                                </h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- FIN HEADER CONTENT -->
+        </header>
+
+        <!-- SECTION RESSOURCES -->
+        <section class="section__resources">
+            <h3 class="section__resources__subtitle">The Ultimate Toolkit for
+                Creators</h3>
+            <h4 class="resources__title">Create with Vision Work with
+                Precision</h4>
+            <p class="section__resources__description">
+                Your creative process deserves the best. Wokeasy curates a
+                selection of
+                high-quality resources tailored for designers and developers.
+                Discover
+                premium fonts, UI kits, icon sets, motion assets, and
+                templates—all in
+                one place.
+            </p>
+
+            <!-- 4 cartes flottantes -->
+            <div class="section__resources__card--1 card">
+                <div class="card__media">
+                    <img loading="lazy"
+                        src="assets/images/font.webp"
+                        alt="Exemple d'une police de caractères" />
+                </div>
+            </div>
+
+            <div class="section__resources__card--2 card">
+                <div class="card__media">
+                    <video loading="lazy" controls="false" autoplay loop muted>
+                        <source
+                            src="assets/images/original-680dcdae0a4ac1456688215c85199c73.webm"
+                            type="video/mp4" />
+                        Your browser does not support the video tag.
+                    </video>
+                </div>
+            </div>
+
+            <div class="section__resources__card--3 card">
+                <div class="card__media">
+                    <img loading="lazy"
+                        src="assets/images/original-0375602e302703ef3eba39a6c2e4ab43.webp"
+                        alt="Exemple d'une police de caractères" />
+                </div>
+            </div>
+
+            <div class="section__resources__card--4 card">
+                <div class="card__media">
+                    <video loading="lazy" controls="false" autoplay loop muted>
+                        <source src="assets/images/combo.mp4"
+                            type="video/mp4" />
+                        Your browser does not support the video tag.
+                    </video>
+                </div>
+            </div>
+        </section>
+        <!-- FIN SECTION RESSOURCES -->
+
+        <!-- MODALE DE RECHERCHE -->
+        <div id="searchModal" class="modal">
+            <div class="modal__overlay"></div>
+            <div class="modal__content">
+                <div class="modal__container">
+                    <input
+                        type="text"
+                        autocomplete="off"
+                        id="modalSearchInput"
+                        class="modal__input"
+                        placeholder="Search..." />
+                    <button id="modalClose" class="modal__close"
+                        aria-label="Fermer la fenêtre">
+                        ✖
+                    </button>
+                </div>
+                <div id="modalSuggestions" class="modal__suggestions"></div>
+            </div>
+        </div>
+        <!-- FIN MODALE DE RECHERCHE -->
+
+        <!-- ICONES LUCIDE -->
+        <script src="https://unpkg.com/lucide@latest"></script>
+        <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        lucide.createIcons();
+      });
+    </script>
+
+        <!-- TON FICHIER JS -->
+        <script src="assets/js/app.js" defer></script>
+    </body>
+</html>

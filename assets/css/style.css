@@ -1,0 +1,670 @@
+/* ------------------------------------- */
+/* -------------- RESET ---------------- */
+/* ------------------------------------- */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* ------------------------------------- */
+/* ------------- VARIABLES ------------- */
+/* ------------------------------------- */
+
+:root {
+  /* Couleurs principales */
+  --clr__background: #101010;
+  --clr__button-bg: #181818;
+  --clr__text: #f0f0f0;
+  --clr__text-fade: #282828;
+  --clr__accent: #8c8c8c;
+  --gradient__bg: linear-gradient(0deg, #525252, #acacac);
+
+  /* Fonts (familiales) */
+  --font__primary: "PPValve", sans-serif;
+  --font__secondary: "PPMachina", sans-serif;
+
+  /* Tailles (espacements) */
+  --spacing__xs: 0.5rem;
+  --spacing__sm: 1rem;
+  --spacing__md: 2rem;
+  --spacing__lg: 3rem;
+}
+
+/* Mode dark */
+[data-theme="dark"] {
+  --clr__background: #101010;
+  --clr__button-bg: #181818;
+  --clr__text: #f0f0f0;
+  --clr__text-fade: #282828;
+  --clr__accent: #8c8c8c;
+  --gradient__bg: linear-gradient(0deg, #525252, #acacac);
+}
+[data-theme="light"] {
+  --clr__background: #ffffff;
+  --clr__text: #0e0e0e;
+  --clr__text-fade: #d8d8d8;
+  --clr__button-bg: #d8d8d8;
+  --clr__accent: #535353;
+  --gradient__bg: linear-gradient(180deg, #282828, #c5c5c5);
+}
+
+/* ------------------------------------- */
+/* -------------- FONTS ---------------- */
+/* ------------------------------------- */
+
+@font-face {
+  font-family: "PPValve";
+  src: url("../fonts/PPValve-PlainExtralight.otf");
+}
+@font-face {
+  font-family: "PPMachina";
+  src: url("../fonts/PPNeueMachina-PlainLight.otf");
+}
+
+/* ------------------------------------- */
+/* --------- STRUCTURE GLOBALE --------- */
+/* ------------------------------------- */
+
+html,
+body {
+  min-height: 100%;
+  width: 100%;
+  scroll-behavior: smooth;
+  background: var(--clr__background);
+  color: var(--clr__text-fade);
+  font-family: var(--font__primary);
+  font-size: 14px;
+  font-weight: 400 !important;
+  list-style: none;
+}
+
+/* ------------------------------------- */
+/* ------------- NAV BAR --------------- */
+/* ------------------------------------- */
+
+.nav__bar {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  height: 8vh;
+}
+
+.nav__bar__left,
+.nav__bar__right {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+/* Alignement à droite des éléments */
+.nav__bar__right {
+  justify-content: flex-end;
+  gap: var(--spacing__sm);
+}
+
+/* Lien principal du h1 */
+.site__title__link {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing__xs);
+  color: var(--clr__text);
+  text-decoration: none;
+}
+
+.site__title__link:hover {
+  text-decoration: none;
+  color: var(--clr__accent);
+}
+
+/* Logo du h1 */
+.site__title svg {
+  width: 30px;
+  fill: var(--clr__text);
+}
+
+/* Liens de navigation */
+.nav__links {
+  display: flex;
+  flex-direction: row;
+  gap: var(--spacing__sm);
+  list-style: none;
+}
+
+.nav__links__link {
+  text-decoration: none;
+  color: var(--clr__accent);
+  font-family: var(--font__secondary);
+}
+
+.nav__links__link:hover {
+  color: var(--clr__text);
+}
+
+/* ------------------------------------- */
+/* ----------- SEARCH INPUT ------------ */
+/* ------------------------------------- */
+
+.search__container {
+  position: relative;
+  width: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.8rem;
+  gap: var(--spacing__md);
+  line-height: 1.5;
+}
+
+/* Input principal */
+.search__input {
+  all: unset;
+  width: 90%;
+  padding: var(--spacing__xs) var(--spacing__sm);
+  border-radius: 6px;
+  border: 1px solid var(--clr__text-fade);
+  background-color: var(--clr__button-bg);
+  color: var(--clr__text);
+  font-family: var(--font__secondary);
+}
+.search__input::placeholder {
+  color: var(--clr__accent);
+}
+
+.search__input:hover,
+.search__input:focus {
+  outline: none;
+  color: var(--clr__text);
+}
+
+/* Suggestions */
+.search__suggestions {
+  position: absolute;
+  top: 5vh;
+  width: 100%;
+  margin-top: var(--spacing__xs);
+  border: 1px solid var(--clr__text-fade);
+  background-color: var(--clr__button-bg);
+  color: var(--clr__accent);
+  border-radius: 6px;
+  padding: var(--spacing__xs);
+  flex-direction: row;
+  display: none;
+  z-index: 1;
+}
+
+/* Chaque suggestion */
+.search__suggestion {
+  padding: var(--spacing__xs);
+  cursor: pointer;
+}
+.search__suggestion:hover,
+.search__suggestion.selected {
+  background: var(--clr__text-fade);
+  color: var(--clr__text);
+}
+
+/* Bouton/triger "/ + K" */
+.nav__bar .search__trigger {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 80%;
+  gap: 0.15rem;
+  width: 6rem;
+  padding: var(--spacing__xs) var(--spacing__sm);
+  font-size: 0.8rem;
+  border: 1px solid var(--clr__text-fade);
+  background-color: var(--clr__button-bg);
+  color: var(--clr__accent);
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+/* ------------------------------------- */
+/* ----------- THEME TOGGLE ------------ */
+/* ------------------------------------- */
+
+.theme__toggle {
+  border: none;
+  background: none;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: calc(var(--spacing__xs) / 1.2);
+  border: 1px solid var(--clr__text-fade);
+  border-radius: 6px;
+  background-color: var(--clr__button-bg);
+  transition: transform 0.2s;
+}
+
+.theme__toggle svg {
+  width: 18.5px;
+  height: 18.5px;
+
+  stroke: var(--clr__accent);
+}
+
+.theme__toggle:hover svg {
+  stroke: var(--clr__text);
+}
+
+/* Barre du haut */
+.top__bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.5rem 1.5rem;
+  background: #101010;
+  border-bottom: 1px solid #282828;
+}
+
+/* Logo */
+.site__logo {
+  color: #ffffff;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+
+/* Avatar */
+.avatar__wrapper {
+  position: relative;
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
+}
+.avatar__image {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+/* Menu déroulant (caché par défaut) */
+.profile__dropdown {
+  position: absolute;
+  top: 60px; /* ajuster selon la hauteur de ta barre */
+  right: 1.5rem; /* ou coller à la droite du .avatar__wrapper */
+  width: 200px;
+  background: #181818;
+  border: 1px solid #282828;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+  display: none; /* masqué par défaut */
+  z-index: 9999; /* au-dessus */
+}
+
+/* Style de la liste dans le menu */
+.profile__dropdown__list {
+  list-style: none;
+  margin: 0;
+  padding: 0.5rem 0;
+}
+
+.profile__dropdown__list li a {
+  display: block;
+  padding: 0.5rem 1rem;
+  color: var(--clr__accent);
+  text-decoration: none;
+  font-size: 0.9rem;
+}
+
+.profile__dropdown__list li a:hover {
+  background: var(--clr__text-fade);
+  color: var(--clr__text);
+}
+
+/* Séparateur */
+.profile__dropdown__divider {
+  margin: 0.5rem 0;
+  height: 1px;
+  background: var(--clr__text-fade);
+}
+
+/* Classe visible (qu’on appliquera en JS) */
+.profile__dropdown--visible {
+  display: block;
+}
+
+/* ------------------------------------- */
+/* ---------------- HEADER ------------- */
+/* ------------------------------------- */
+
+/* Wrapper global du header */
+.header__wrapper {
+  height: 100vh;
+  width: 100%;
+  padding-inline: var(--spacing__lg);
+}
+
+/* Container principal du header */
+.header__container {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  height: calc(100vh - 8vh);
+}
+
+/* Partie gauche du header */
+.header__container__left {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 60%;
+  gap: var(--spacing__sm);
+}
+
+.header__subtitle {
+  font-family: var(--font__secondary);
+  font-size: 0.8rem;
+  background-color: var(--clr__button-bg);
+  color: var(--clr__accent);
+  padding: var(--spacing__xs) var(--spacing__sm);
+  border-radius: 6px;
+  width: 15rem;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+.header__title {
+  font-size: 6rem;
+  text-transform: uppercase;
+  line-height: 115%;
+  background: var(--gradient__bg);
+  background-size: 100%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-wrap: balance;
+}
+
+.header__description {
+  width: 60%;
+  line-height: 165%;
+  color: var(--clr__accent);
+  font-family: var(--font__secondary);
+}
+
+/* Partie droite du header */
+.header__container__right {
+  width: 40%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+/* ------------------------------------- */
+/* --------------- CARDS --------------- */
+/* ------------------------------------- */
+
+.cards__container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+.card {
+  background-color: var(--clr__button-bg);
+  border: 1px solid var(--clr__text-fade);
+  border-radius: 16px;
+  overflow: hidden;
+  width: 80%;
+  height: 60%;
+  padding: var(--spacing__xs);
+  display: flex;
+  flex-direction: column;
+}
+
+/* Media dans la card (video ou image) */
+.card__media {
+  position: relative;
+  width: 100%;
+  height: 85%;
+  border-radius: 12px;
+}
+
+.card__media video,
+.card__media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 12px;
+  aspect-ratio: 1.1;
+  user-select: none !important;
+  pointer-events: none !important;
+}
+
+video::-webkit-media-controls {
+  display: none !important;
+}
+
+/* Lien de bookmarking (en haut à droite) */
+.card__bookmark {
+  position: absolute;
+  top: var(--spacing__xs);
+  right: var(--spacing__xs);
+  padding: var(--spacing__xs);
+  border-radius: 6px;
+  border: 1px solid var(--clr__text-fade);
+  background-color: var(--clr__button-bg);
+  color: var(--clr__accent);
+  text-decoration: none;
+}
+.card__bookmark:hover {
+  color: var(--clr__text);
+}
+
+/* Contenu texte de la card */
+.card__content {
+  width: 100%;
+  height: 15%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: var(--spacing__xs);
+  padding: var(--spacing__xs);
+}
+
+/* Logo dans la card */
+.card__logo {
+  height: 50% !important;
+}
+.card__logo img {
+  height: 100% !important;
+  object-fit: cover;
+}
+
+/* Nom du projet dans la card */
+.card__name a {
+  font-family: var(--font__primary);
+  text-decoration: none;
+  color: var(--clr__accent);
+}
+.card__name a:hover {
+  color: var(--clr__text);
+}
+
+/* ------------------------------------- */
+/* ---------- SECTION RESSOURCES ------- */
+/* ------------------------------------- */
+
+.section__resources {
+  position: relative;
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing__xs);
+  text-align: center;
+}
+
+.section__resources__subtitle {
+  font-family: var(--font__secondary);
+  font-size: 0.8rem;
+  background-color: var(--clr__button-bg);
+  color: var(--clr__accent);
+  padding: var(--spacing__xs) var(--spacing__sm);
+  border-radius: 6px;
+}
+
+.resources__title {
+  font-size: 4rem;
+  text-transform: uppercase;
+  line-height: 115%;
+  background: var(--gradient__bg);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-wrap: balance;
+  width: 80%;
+}
+
+.section__resources__description {
+  width: 45%;
+  line-height: 165%;
+  color: var(--clr__accent);
+  font-family: var(--font__secondary);
+}
+
+/* Positionnement des 4 cartes */
+.section__resources .card {
+  position: absolute;
+  width: auto; /* On peut ajuster si besoin */
+}
+
+/* On garde le même positionnement transform() */
+.section__resources__card--1 {
+  left: 0;
+  top: 0;
+  transform: scale(0.4) rotate(-10deg);
+}
+.section__resources__card--2 {
+  right: 0;
+  top: 0;
+  transform: scale(0.4) rotate(10deg);
+}
+.section__resources__card--3 {
+  right: 0;
+  top: 40%;
+  transform: scale(0.4);
+}
+.section__resources__card--4 {
+  left: 0;
+  top: 40%;
+  transform: scale(0.4);
+}
+
+/* ------------------------------------- */
+/* ---------------- MODAL -------------- */
+/* ------------------------------------- */
+
+.modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+/* Overlay */
+.modal__overlay {
+  position: absolute;
+  inset: 0;
+}
+
+/* Contenu de la modale */
+.modal__content {
+  position: relative;
+  background: var(--clr__button-bg);
+  border: 1px solid var(--clr__text-fade);
+  border-radius: 6px;
+  width: 50%;
+  padding: var(--spacing__md);
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
+  align-self: center;
+  justify-content: center;
+  gap: var(--spacing__sm);
+}
+
+/* Container input + bouton de fermeture */
+.modal__container {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing__sm);
+}
+
+/* Input dans la modale */
+.modal__input {
+  width: 90%;
+  font-size: 1rem;
+  font-family: var(--font__secondary);
+  border: 1px solid var(--clr__text-fade);
+  border-radius: 6px;
+  padding: var(--spacing__sm);
+  background: var(--clr__background);
+  color: var(--clr__accent);
+  outline: none;
+}
+
+/* Bouton close */
+.modal__close {
+  width: 3rem;
+  font-size: 0.8rem;
+  align-self: flex-end;
+  border: 1px solid var(--clr__text-fade);
+  background: var(--clr__background);
+  color: var(--clr__accent);
+  border-radius: 6px;
+  padding: var(--spacing__sm);
+  cursor: pointer;
+}
+.modal__close:hover {
+  color: var(--clr__text);
+}
+
+/* Suggestions dans la modale */
+.modal__suggestions {
+  border-radius: 6px;
+  background: var(--clr__background);
+  color: var(--clr__accent);
+  border: 1px solid var(--clr__text-fade);
+  padding: var(--spacing__sm);
+}
+
+/* Groupe de suggestions */
+.suggestion__group {
+  font-size: 1rem;
+  font-weight: bold;
+  color: var(--clr__text);
+  margin-block: var(--spacing__sm);
+}
+
+/* Items de suggestions */
+.suggestion__item {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: var(--spacing__sm);
+  cursor: pointer;
+  margin-block: var(--spacing__sm);
+  font-family: var(--font__secondary);
+}
+.suggestion__item:hover,
+.suggestion__item.selected {
+  color: var(--clr__text);
+}
