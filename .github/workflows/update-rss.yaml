@@ -15,7 +15,9 @@ jobs:
 
       - name: Récupérer les flux RSS et générer le JSON
         run: |
-          echo "{\n  \"lastUpdate\": \"$(date -u +"%Y-%m-%dT%H:%M:%SZ")\",\n  \"projects\": [" > data.json
+          echo "{
+            \"lastUpdate\": \"$(date -u +"%Y-%m-%dT%H:%M:%SZ")\",
+            \"projects\": [" > data.json
 
           FEEDS=("https://www.awwwards.com/rss/" "https://www.behance.net/feeds/latest" "https://dribbble.com/shots/popular.rss")
 
@@ -34,13 +36,19 @@ jobs:
           done
 
           sed -i '$ s/,$//' data.json
-          echo "]\n}" >> data.json
+          echo "]}" >> data.json
 
       - name: Commit et push des modifications
         run: |
           git config --global user.name "github-actions"
           git config --global user.email "actions@github.com"
-          git pull --rebase https://x-access-token:${{ secrets.GH_PAT }}@github.com/CharefSarah/Wokeasy.git
+
+          # Vérifier et récupérer les dernières modifications
+          git pull --rebase --autostash https://x-access-token:${{ secrets.GH_PAT }}@github.com/CharefSarah/Wokeasy.git || echo "Aucun changement à fusionner"
+
+          # Ajouter et commit seulement si des changements existent
           git add data.json
-          git commit -m "Mise à jour automatique du flux RSS" || echo "Aucune modification"
-          git push https://x-access-token:${{ secrets.GH_PAT }}@github.com/CharefSarah/Wokeasy.git
+          git diff --cached --quiet || git commit -m "Mise à jour automatique du flux RSS"
+
+          # Pousser les changements
+          git push https://x-access-token:${{ secrets.GH_PAT }}@github.com/CharefSarah/Wokeasy.git || echo "Aucun changement à pousser"
