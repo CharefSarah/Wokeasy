@@ -19,11 +19,11 @@ jobs:
             \"lastUpdate\": \"$(date -u +"%Y-%m-%dT%H:%M:%SZ")\",
             \"projects\": [" > data.json
 
-          FEEDS=("https://www.awwwards.com/rss/" "https://www.behance.net/feeds/latest" "https://dribbble.com/shots/popular.rss")
+          FEEDS=("https://dribbble.com/shots/popular.rss")
 
           for FEED in "${FEEDS[@]}"; do
             echo "Fetching: $FEED"
-            RSS=$(curl -s "$FEED")
+          RSS=$(curl --max-time 10 -s "$FEED")
 
             ITEMS=$(echo "$RSS" | grep -oP '(?<=<item>).*?(?=</item>)' | head -5)
 
