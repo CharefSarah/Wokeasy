@@ -19,11 +19,11 @@ jobs:
             \"lastUpdate\": \"$(date -u +"%Y-%m-%dT%H:%M:%SZ")\",
             \"projects\": [" > data.json
 
-          FEEDS=("https://dribbble.com/shots/popular.rss")
+          FEEDS=("https://www.awwwards.com/rss/" "https://www.behance.net/feeds/latest" "https://dribbble.com/shots/popular.rss")
 
           for FEED in "${FEEDS[@]}"; do
             echo "Fetching: $FEED"
-          RSS=$(curl --max-time 10 -s "$FEED")
+            RSS=$(curl --max-time 10 -s "$FEED")
 
             ITEMS=$(echo "$RSS" | grep -oP '(?<=<item>).*?(?=</item>)' | head -5)
 
@@ -42,6 +42,12 @@ jobs:
         run: |
           git config --global user.name "CharefSarah"
           git config --global user.email "TON_EMAIL_GITHUB"
+
+          # Récupérer les dernières modifications avant de push
+          git pull --rebase https://x-access-token:${{ secrets.GH_TOKEN }}@github.com/CharefSarah/Wokeasy.git master
+
           git add data.json
           git commit -m "Mise à jour automatique du flux RSS" || echo "Aucune modification"
+
+          # Pousser les changements
           git push https://x-access-token:${{ secrets.GH_TOKEN }}@github.com/CharefSarah/Wokeasy.git
