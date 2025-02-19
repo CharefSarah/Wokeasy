@@ -1,7 +1,6 @@
 document.addEventListener("DOMContentLoaded", function () {
   const jsonUrl = "https://CharefSarah.github.io/Wokeasy/data.json";
 
-  // 🔹 Liste des projets existants (que tu avais déjà)
   const projectsData = [
     {
       name: "Sweetgreen",
@@ -24,68 +23,90 @@ document.addEventListener("DOMContentLoaded", function () {
       image: "assets/images/s.webp",
       video: null,
     },
-    {
-      name: "Jones Knowles Ritchie",
-      category: "Design",
-      colors: ["Blue", "Red"],
-      styles: ["Minimal"],
-      bookmarkLink: "https://www.jkrglobal.com/work/centersquare",
-      logo: "assets/images/wallmart.svg",
-      image: null,
-      video: "assets/images/walmart.mp4",
-    },
   ];
 
-  let allProjects = [...projectsData]; // 🔹 Fusion des projets locaux
+  let allProjects = [...projectsData];
 
-  // 🔹 Récupérer les projets du JSON GitHub (mise à jour auto)
   async function fetchExternalProjects() {
     try {
+      console.log("🔄 Chargement des projets...");
+
       const response = await fetch(jsonUrl);
       const data = await response.json();
-      allProjects = [...projectsData, ...data.projects]; // 🔥 Fusionne les données
-      renderGrid(); // 🔹 Met à jour la grille
+      console.log("📢 Données récupérées :", data.projects);
+
+      allProjects = [...projectsData, ...data.projects];
+      renderCards();
     } catch (error) {
-      console.error("Erreur de chargement du JSON :", error);
+      console.error("❌ Erreur de chargement du JSON :", error);
     }
   }
 
-  // 🔹 Fonction pour afficher Grid.js
-  function renderGrid() {
-    const gridContainer = document.getElementById("galleryContainer");
-    gridContainer.innerHTML = ""; // Nettoyage avant affichage
+  function renderCards() {
+    const galleryContainer = document.getElementById("galleryContainer");
+    galleryContainer.innerHTML = "";
 
-    // 🔹 Convertir les projets en format Grid.js
-    const gridData = allProjects.map((proj) => [
-      proj.name || "Projet sans titre",
-      proj.category || "null",
-      proj.colors?.length > 0 ? proj.colors.join(", ") : "null",
-      proj.styles?.length > 0 ? proj.styles.join(", ") : "null",
-      proj.bookmarkLink
-        ? gridjs.html(`<a href="${proj.bookmarkLink}" target="_blank">Voir</a>`)
-        : "null",
-    ]);
+    allProjects.forEach((proj) => {
+      const card = document.createElement("div");
+      card.className = "card";
 
-    // 🔥 Initialisation de Grid.js
-    new gridjs.Grid({
-      columns: ["Titre", "Catégorie", "Couleurs", "Styles", "Lien"],
-      data: gridData,
-      pagination: { limit: 10 },
-      search: true,
-      sort: true,
-      language: {
-        search: { placeholder: "Rechercher..." },
-        pagination: {
-          previous: "Précédent",
-          next: "Suivant",
-          showing: "Affichage",
-          of: "sur",
-          to: "à",
-          results: "résultats",
-        },
-      },
-    }).render(gridContainer);
+      if (proj.category?.toLowerCase() === "app") {
+        card.classList.add("card__app");
+      }
+
+      const mediaDiv = document.createElement("div");
+      mediaDiv.className = "card__media";
+
+      if (proj.video && proj.video !== "null") {
+        const vid = document.createElement("video");
+        vid.src = proj.video;
+        vid.autoplay = true;
+        vid.loop = true;
+        vid.muted = true;
+        mediaDiv.appendChild(vid);
+      } else if (proj.image && proj.image !== "null") {
+        const img = document.createElement("img");
+        img.src = proj.image;
+        mediaDiv.appendChild(img);
+      }
+
+      const bookmark = document.createElement("a");
+      bookmark.className = "card__bookmark";
+      bookmark.href = proj.bookmarkLink || "#";
+      bookmark.target = "_blank";
+      bookmark.innerHTML = `
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-square-arrow-out-up-right"><path d="M21 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h6"/><path d="m21 3-9 9"/><path d="M15 3h6v6"/></svg>
+      `;
+      mediaDiv.appendChild(bookmark);
+
+      const contentDiv = document.createElement("div");
+      contentDiv.className = "card__content";
+
+      if (proj.logo && proj.logo !== "null") {
+        const logoDiv = document.createElement("div");
+        logoDiv.className = "card__logo";
+        const logoImg = document.createElement("img");
+        logoImg.src = proj.logo;
+        logoDiv.appendChild(logoImg);
+        contentDiv.appendChild(logoDiv);
+      }
+
+      const nameDiv = document.createElement("div");
+      nameDiv.className = "card__name";
+      const nameLink = document.createElement("a");
+      nameLink.href = proj.bookmarkLink || "#";
+      nameLink.textContent = proj.name || "Projet sans titre";
+      nameDiv.appendChild(nameLink);
+      contentDiv.appendChild(nameDiv);
+
+      card.appendChild(mediaDiv);
+      card.appendChild(contentDiv);
+      galleryContainer.appendChild(card);
+    });
+
+    console.log("✅ Cartes mises à jour !");
   }
 
-  fetchExternalProjects(); // 🔹 Charge les projets au démarrage
+  // 🔹 Lancer le fetch immédiatement
+  fetchExternalProjects();
 });
