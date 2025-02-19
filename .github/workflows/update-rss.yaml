@@ -15,15 +15,13 @@ jobs:
 
       - name: Récupérer les flux RSS et générer le JSON
         run: |
-          echo "{
-            \"lastUpdate\": \"$(date -u +"%Y-%m-%dT%H:%M:%SZ")\",
-            \"projects\": [" > data.json
+          echo "{\n  \"lastUpdate\": \"$(date -u +"%Y-%m-%dT%H:%M:%SZ")\",\n  \"projects\": [" > data.json
 
           FEEDS=("https://www.awwwards.com/rss/" "https://www.behance.net/feeds/latest" "https://dribbble.com/shots/popular.rss")
 
           for FEED in "${FEEDS[@]}"; do
             echo "Fetching: $FEED"
-            RSS=$(curl --max-time 10 -s "$FEED")
+            RSS=$(curl -s "$FEED")
 
             ITEMS=$(echo "$RSS" | grep -oP '(?<=<item>).*?(?=</item>)' | head -5)
 
@@ -31,23 +29,18 @@ jobs:
               TITLE=$(echo "$ITEM" | grep -oP '(?<=<title>).*?(?=</title>)' | sed 's/"/\\"/g')
               LINK=$(echo "$ITEM" | grep -oP '(?<=<link>).*?(?=</link>)' | sed 's/"/\\"/g')
 
-              echo "    {\"name\": \"$TITLE\", \"bookmarkLink\": \"$LINK\", \"category\": \"null\", \"colors\": [], \"styles\": [], \"logo\": \"null\", \"image\": \"null\", \"video\": \"null\"}," >> data.json
+              echo "    {\"title\": \"$TITLE\", \"link\": \"$LINK\", \"category\": \"null\", \"colors\": [], \"styles\": [], \"logo\": \"null\", \"image\": \"null\", \"video\": \"null\"}," >> data.json
             done <<< "$ITEMS"
           done
 
           sed -i '$ s/,$//' data.json
-          echo "]}" >> data.json
+          echo "]\n}" >> data.json
 
       - name: Commit et push des modifications
         run: |
-          git config --global user.name "CharefSarah"
-          git config --global user.email "TON_EMAIL_GITHUB"
-
-          # Récupérer les dernières modifications avant de push
-          git pull --rebase https://x-access-token:${{ secrets.GH_TOKEN }}@github.com/CharefSarah/Wokeasy.git master
-
+          git config --global user.name "github-actions"
+          git config --global user.email "actions@github.com"
+          git pull --rebase https://x-access-token:${{ secrets.GH_PAT }}@github.com/CharefSarah/Wokeasy.git
           git add data.json
           git commit -m "Mise à jour automatique du flux RSS" || echo "Aucune modification"
-
-          # Pousser les changements
-          git push https://x-access-token:${{ secrets.GH_TOKEN }}@github.com/CharefSarah/Wokeasy.git
+          git push https://x-access-token:${{ secrets.GH_PAT }}@github.com/CharefSarah/Wokeasy.git
