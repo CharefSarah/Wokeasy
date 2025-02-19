@@ -1,7 +1,9 @@
 {
-  "lastUpdate": "2025-02-19T21:33:51Z",
+  "lastUpdate": "2025-02-19T21:49:08Z",
   "projects": [
-    {"title": "", "link": "", "category": "null", "colors": [], "styles": [], "logo": "null", "image": "null", "video": "null"},
-    {"title": "", "link": "", "category": "null", "colors": [], "styles": [], "logo": "null", "image": "null", "video": "null"},
-    {"title": "", "link": "", "category": "null", "colors": [], "styles": [], "logo": "null", "image": "null", "video": "null"}
+    {"title": "Takamitsu Motoyoshi", "link": "https://www.awwwards.com/sites/takamitsu-motoyoshi", "category": "null", "colors": [], "styles": [], "logo": "null", "image": "null", "video": "null"},
+    {"title": "Ottografie 2025", "link": "https://www.awwwards.com/sites/ottografie-2025", "category": "null", "colors": [], "styles": [], "logo": "null", "image": "null", "video": "null"},
+    {"title": "Noovo", "link": "https://www.awwwards.com/sites/noovo", "category": "null", "colors": [], "styles": [], "logo": "null", "image": "null", "video": "null"},
+    {"title": "Zypsy", "link": "https://www.awwwards.com/sites/zypsy-site", "category": "null", "colors": [], "styles": [], "logo": "null", "image": "null", "video": "null"},
+    {"title": "Lacoste Members Experience", "link": "https://www.awwwards.com/sites/lacoste-members-experience", "category": "null", "colors": [], "styles": [], "logo": "null", "image": "null", "video": "null"}
 ]}
