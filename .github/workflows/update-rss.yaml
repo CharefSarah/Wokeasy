@@ -31,7 +31,7 @@ jobs:
               TITLE=$(echo "$ITEM" | grep -oP '(?<=<title>).*?(?=</title>)' | sed 's/"/\\"/g')
               LINK=$(echo "$ITEM" | grep -oP '(?<=<link>).*?(?=</link>)' | sed 's/"/\\"/g')
 
-              echo "    {\"title\": \"$TITLE\", \"link\": \"$LINK\", \"category\": \"null\", \"colors\": [], \"styles\": [], \"logo\": \"null\", \"image\": \"null\", \"video\": \"null\"}," >> data.json
+              echo "    {\"name\": \"$TITLE\", \"bookmarkLink\": \"$LINK\", \"category\": \"null\", \"colors\": [], \"styles\": [], \"logo\": \"null\", \"image\": \"null\", \"video\": \"null\"}," >> data.json
             done <<< "$ITEMS"
           done
 
@@ -41,7 +41,7 @@ jobs:
       - name: Commit et push des modifications
         run: |
           git config --global user.name "CharefSarah"
-          git config --global user.email "charef.sarah@gmx.fr"
+          git config --global user.email "TON_EMAIL_GITHUB"
           git add data.json
-          git commit -m "Mise à jour automatique du flux RSS"
-          git push
+          git commit -m "Mise à jour automatique du flux RSS" || echo "Aucune modification"
+          git push https://x-access-token:${{ secrets.GH_TOKEN }}@github.com/CharefSarah/Wokeasy.git
