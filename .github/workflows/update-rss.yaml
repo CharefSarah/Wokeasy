@@ -1,0 +1,47 @@
+name: Update RSS Feeds
+
+on:
+  schedule:
+    - cron: "0 6 * * *" # Exécute tous les jours à 6h du matin
+  workflow_dispatch: # Permet de lancer manuellement
+
+jobs:
+  update-json:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout du repo
+        uses: actions/checkout@v3
+
+      - name: Récupérer les flux RSS et générer le JSON
+        run: |
+          echo "{
+            \"lastUpdate\": \"$(date -u +"%Y-%m-%dT%H:%M:%SZ")\",
+            \"projects\": [" > data.json
+
+          FEEDS=("https://www.awwwards.com/rss/" "https://www.behance.net/feeds/latest" "https://dribbble.com/shots/popular.rss")
+
+          for FEED in "${FEEDS[@]}"; do
+            echo "Fetching: $FEED"
+            RSS=$(curl -s "$FEED")
+
+            ITEMS=$(echo "$RSS" | grep -oP '(?<=<item>).*?(?=</item>)' | head -5)
+
+            while read -r ITEM; do
+              TITLE=$(echo "$ITEM" | grep -oP '(?<=<title>).*?(?=</title>)' | sed 's/"/\\"/g')
+              LINK=$(echo "$ITEM" | grep -oP '(?<=<link>).*?(?=</link>)' | sed 's/"/\\"/g')
+
+              echo "    {\"title\": \"$TITLE\", \"link\": \"$LINK\", \"category\": \"null\", \"colors\": [], \"styles\": [], \"logo\": \"null\", \"image\": \"null\", \"video\": \"null\"}," >> data.json
+            done <<< "$ITEMS"
+          done
+
+          sed -i '$ s/,$//' data.json
+          echo "]}" >> data.json
+
+      - name: Commit et push des modifications
+        run: |
+          git config --global user.name "github-actions"
+          git config --global user.email "actions@github.com"
+          git add data.json
+          git commit -m "Mise à jour automatique du flux RSS"
+          git push
