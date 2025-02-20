@@ -1,9 +1,14 @@
 {
-  "lastUpdate": "2025-02-20T06:15:18Z",
+  "lastUpdate": "2025-02-20T09:56:04Z",
   "projects": [
-    {"title": "Takamitsu Motoyoshi", "link": "https://www.awwwards.com/sites/takamitsu-motoyoshi", "category": "null", "colors": [], "styles": [], "logo": "null", "image": "null", "video": "null"},
-    {"title": "Ottografie 2025", "link": "https://www.awwwards.com/sites/ottografie-2025", "category": "null", "colors": [], "styles": [], "logo": "null", "image": "null", "video": "null"},
-    {"title": "Noovo", "link": "https://www.awwwards.com/sites/noovo", "category": "null", "colors": [], "styles": [], "logo": "null", "image": "null", "video": "null"},
-    {"title": "Zypsy", "link": "https://www.awwwards.com/sites/zypsy-site", "category": "null", "colors": [], "styles": [], "logo": "null", "image": "null", "video": "null"},
-    {"title": "Lacoste Members Experience", "link": "https://www.awwwards.com/sites/lacoste-members-experience", "category": "null", "colors": [], "styles": [], "logo": "null", "image": "null", "video": "null"}
+    {"title": "Takamitsu Motoyoshi", "link": "https://www.awwwards.com/sites/takamitsu-motoyoshi", "category": "null", "colors": [], "styles": [], "logo": "null", "image": "https://www.awwwards.com/awards/submissions/2025/02/67af2d8d3f8fb260148568.png", "video": "null"},
+    {"title": "Ottografie 2025", "link": "https://www.awwwards.com/sites/ottografie-2025", "category": "null", "colors": [], "styles": [], "logo": "null", "image": "https://www.awwwards.com/awards/submissions/2025/02/67b4537be1537835850655.jpg", "video": "null"},
+    {"title": "Noovo", "link": "https://www.awwwards.com/sites/noovo", "category": "null", "colors": [], "styles": [], "logo": "null", "image": "https://www.awwwards.com/awards/submissions/2025/01/678aef21e36a6887070618.png", "video": "null"},
+    {"title": "Zypsy", "link": "https://www.awwwards.com/sites/zypsy-site", "category": "null", "colors": [], "styles": [], "logo": "null", "image": "https://www.awwwards.com/awards/submissions/2025/01/6787578541561086161653.jpg", "video": "null"},
+    {"title": "Lacoste Members Experience", "link": "https://www.awwwards.com/sites/lacoste-members-experience", "category": "null", "colors": [], "styles": [], "logo": "null", "image": "https://www.awwwards.com/awards/submissions/2025/01/678fc63468375765686397.png", "video": "null"},
+    {"title": "Stas Bondar '25", "link": "https://www.awwwards.com/sites/stas-bondar-25", "category": "null", "colors": [], "styles": [], "logo": "null", "image": "https://www.awwwards.com/awards/submissions/2025/01/678b6325409be787330860.jpg", "video": "null"},
+    {"title": "3200 Kelvin", "link": "https://www.awwwards.com/sites/3200-kelvin", "category": "null", "colors": [], "styles": [], "logo": "null", "image": "https://www.awwwards.com/awards/submissions/2025/01/678bdc8b8e8ee738263212.png", "video": "null"},
+    {"title": "Dropbox Brand", "link": "https://www.awwwards.com/sites/dropbox-brand", "category": "null", "colors": [], "styles": [], "logo": "null", "image": "https://www.awwwards.com/awards/submissions/2025/01/678983c0a470d597110092.png", "video": "null"},
+    {"title": "LilFrog", "link": "https://www.awwwards.com/sites/lilfrog", "category": "null", "colors": [], "styles": [], "logo": "null", "image": "https://www.awwwards.com/awards/submissions/2025/01/679a84b3b1990410781325.png", "video": "null"},
+    {"title": "Gufram", "link": "https://www.awwwards.com/sites/gufram", "category": "null", "colors": [], "styles": [], "logo": "null", "image": "https://www.awwwards.com/awards/submissions/2025/01/6786e7769a11e893930284.png", "video": "null"}
 ]}
