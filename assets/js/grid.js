@@ -1,6 +1,33 @@
 document.addEventListener("DOMContentLoaded", function () {
   const jsonUrl = "https://CharefSarah.github.io/Wokeasy/data.json";
 
+  // 🔹 Liste des projets existants (statiques)
+  const projectsData = [
+    {
+      name: "Sweetgreen",
+      category: "App",
+      colors: ["Green", "Beige"],
+      styles: ["Minimal", "Modern"],
+      bookmarkLink: "https://www.wearecollins.com/work/sweetgreen/",
+      logo: "assets/images/sweetgreen.png",
+      image: null,
+      video: "assets/images/8aacfb61-f5af-4f1f-b4d3-fda769dbdc3e.mp4",
+    },
+    {
+      name: "Ronas IT | UI/UX Team",
+      category: "Web",
+      colors: ["Green", "White"],
+      styles: ["Clean"],
+      bookmarkLink:
+        "https://dribbble.com/shots/25605816-E-commerce-Website-Design-Concept",
+      logo: "assets/images/ronas.webp",
+      image: "assets/images/s.webp",
+      video: null,
+    },
+  ];
+
+  let allProjects = [...projectsData]; // 🔹 Fusion des projets locaux
+
   async function fetchExternalProjects() {
     try {
       console.log("📥 Chargement des projets...");
@@ -16,32 +43,23 @@ document.addEventListener("DOMContentLoaded", function () {
         return;
       }
 
-      const formattedProjects = data.projects.map((proj) => {
-        let imageUrl = "assets/images/placeholder.jpg"; // Image du projet par défaut
-        let avatarUrl = "assets/images/default-avatar.png"; // Avatar par défaut
+      // 🔥 Transformation des données récupérées
+      const formattedProjects = data.projects.map((proj) => ({
+        name: proj.title || "Projet sans titre",
+        bookmarkLink: proj.link || "#",
+        category: proj.category !== "null" ? proj.category : "Autre",
+        colors: proj.colors || [],
+        styles: proj.styles || [],
+        logo:
+          proj.logo && proj.logo !== "null"
+            ? proj.logo
+            : "assets/images/avatar.png",
+        image: proj.image && proj.image !== "null" ? proj.image : null,
+        video: proj.video && proj.video !== "null" ? proj.video : null,
+      }));
 
-        if (proj.description && typeof proj.description === "string") {
-          // 🔥 Extraction de l'image principale du projet
-          const imgMatch = proj.description.match(/src='([^']+)'/);
-          if (imgMatch && imgMatch[1]) {
-            imageUrl = imgMatch[1].trim();
-          }
-        }
-
-        return {
-          name: proj.title || "Projet sans titre",
-          bookmarkLink: proj.link || "#",
-          category: proj.category !== "null" ? proj.category : "Autre",
-          colors: proj.colors || [],
-          styles: proj.styles || [],
-          logo: avatarUrl, // Utilisation d'un avatar par défaut
-          image: imageUrl,
-          video: proj.video || null,
-        };
-      });
-
-      allProjects = [...formattedProjects];
-      console.log("✅ Données formatées :", allProjects);
+      allProjects = [...projectsData, ...formattedProjects];
+      console.log("✅ Données formatées avec images :", allProjects);
       renderCards();
     } catch (error) {
       console.error("❌ Erreur de chargement du JSON :", error);
@@ -69,10 +87,15 @@ document.addEventListener("DOMContentLoaded", function () {
       } else if (proj.image) {
         const img = document.createElement("img");
         img.src = proj.image;
-        img.onerror = function () {
-          this.src = "assets/images/placeholder.jpg"; // Fallback si l'image ne charge pas
-        };
+        img.alt = proj.name;
+
+        img.onload = () => console.log("✅ Image chargée :", proj.image);
+        img.onerror = () =>
+          console.error("❌ Erreur de chargement :", proj.image);
+
         mediaDiv.appendChild(img);
+      } else {
+        console.warn("⚠️ Aucune image ou vidéo pour :", proj.name);
       }
 
       const bookmark = document.createElement("a");
@@ -85,12 +108,20 @@ document.addEventListener("DOMContentLoaded", function () {
       const contentDiv = document.createElement("div");
       contentDiv.className = "card__content";
 
-      const logoDiv = document.createElement("div");
-      logoDiv.className = "card__logo";
-      const logoImg = document.createElement("img");
-      logoImg.src = proj.logo;
-      logoDiv.appendChild(logoImg);
-      contentDiv.appendChild(logoDiv);
+      if (proj.logo) {
+        const logoDiv = document.createElement("div");
+        logoDiv.className = "card__logo";
+        const logoImg = document.createElement("img");
+        logoImg.src = proj.logo;
+        logoImg.alt = proj.name + " logo";
+
+        logoImg.onload = () => console.log("✅ Logo chargé :", proj.logo);
+        logoImg.onerror = () =>
+          console.error("❌ Erreur de chargement du logo :", proj.logo);
+
+        logoDiv.appendChild(logoImg);
+        contentDiv.appendChild(logoDiv);
+      }
 
       const nameDiv = document.createElement("div");
       nameDiv.className = "card__name";

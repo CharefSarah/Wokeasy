@@ -61,7 +61,7 @@
   display: grid;
   width: 100%;
   padding-block: 0;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(5, 1fr);
   grid-auto-rows: minmax(30vh, auto);
   padding-block: var(--spacing__lg);
   gap: var(--spacing__md);
