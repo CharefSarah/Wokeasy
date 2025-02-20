@@ -25,13 +25,17 @@ jobs:
             echo "Fetching: $FEED"
             RSS=$(curl -s "$FEED")
 
-            ITEMS=$(echo "$RSS" | grep -oP '(?<=<item>).*?(?=</item>)' | head -5)
+            ITEMS=$(echo "$RSS" | grep -oP '(?<=<item>).*?(?=</item>)' | head -10)
 
             while read -r ITEM; do
               TITLE=$(echo "$ITEM" | grep -oP '(?<=<title>).*?(?=</title>)' | sed 's/"/\\"/g')
               LINK=$(echo "$ITEM" | grep -oP '(?<=<link>).*?(?=</link>)' | sed 's/"/\\"/g')
 
-              echo "    {\"title\": \"$TITLE\", \"link\": \"$LINK\", \"category\": \"null\", \"colors\": [], \"styles\": [], \"logo\": \"null\", \"image\": \"null\", \"video\": \"null\"}," >> data.json
+              # 🔥 Extraction de l'image du projet
+              IMAGE=$(echo "$ITEM" | grep -oP "(?<=<img src=')[^']+" | head -1)
+              IMAGE=${IMAGE:-"null"} # Si pas d'image, mettre "null"
+
+              echo "    {\"title\": \"$TITLE\", \"link\": \"$LINK\", \"category\": \"null\", \"colors\": [], \"styles\": [], \"logo\": \"null\", \"image\": \"$IMAGE\", \"video\": \"null\"}," >> data.json
             done <<< "$ITEMS"
           done
 
@@ -43,12 +47,8 @@ jobs:
           git config --global user.name "github-actions"
           git config --global user.email "actions@github.com"
 
-          # Vérifier et récupérer les dernières modifications
-          git pull --rebase --autostash https://x-access-token:${{ secrets.GH_PAT }}@github.com/CharefSarah/Wokeasy.git || echo "Aucun changement à fusionner"
+          git pull --rebase https://x-access-token:${{ secrets.GH_PAT }}@github.com/CharefSarah/Wokeasy.git
 
-          # Ajouter et commit seulement si des changements existent
           git add data.json
-          git diff --cached --quiet || git commit -m "Mise à jour automatique du flux RSS"
-
-          # Pousser les changements
-          git push https://x-access-token:${{ secrets.GH_PAT }}@github.com/CharefSarah/Wokeasy.git || echo "Aucun changement à pousser"
+          git commit -m "Mise à jour automatique du flux RSS avec images" || echo "Aucune modification"
+          git push https://x-access-token:${{ secrets.GH_PAT }}@github.com/CharefSarah/Wokeasy.git
