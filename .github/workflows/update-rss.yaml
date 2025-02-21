@@ -19,7 +19,7 @@ jobs:
             \"lastUpdate\": \"$(date -u +"%Y-%m-%dT%H:%M:%SZ")\",
             \"projects\": [" > data.json
 
-          FEEDS=("https://feeds.feedburner.com/awwwards-sites-of-the-day" , "https://feeds.feedburner.com/dribbble", "https://feeds.feedburner.com/behance")
+          FEEDS=("https://feeds.feedburner.com/awwwards-sites-of-the-day")
 
           for FEED in "${FEEDS[@]}"; do
             echo "Fetching: $FEED"

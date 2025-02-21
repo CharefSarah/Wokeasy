@@ -44,7 +44,7 @@
 [data-theme="light"] {
   --clr__background: #ffffff;
   --clr__text: #0e0e0e;
-  --clr__text-fade: #d8d8d8;
+  --clr__text-fade: #cfcfcf;
   --clr__button-bg: #d8d8d8;
   --clr__accent: #535353;
   --gradient__bg: linear-gradient(180deg, #282828, #c5c5c5);
