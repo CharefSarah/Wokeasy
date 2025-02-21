@@ -10,7 +10,6 @@
 
 /* ------------------------------------- */
 /* -------------- FONTS ---------------- */
-/* ------------------------------------- */
 
 @font-face {
   font-family: "PPValve";
@@ -23,7 +22,6 @@
 
 /* ------------------------------------- */
 /* -------------- body ---------------- */
-/* ------------------------------------- */
 
 .body__inspiration {
   padding-inline: var(--spacing__lg);
@@ -57,6 +55,10 @@
   outline: none;
   color: var(--clr__text);
 }
+
+/* ------------------------------------- */
+/* -------------- gallery -------------- */
+
 .gallery {
   display: grid;
   width: 100%;
@@ -141,7 +143,6 @@ video::-webkit-media-controls {
   opacity: 1;
 }
 
-/* Contenu texte de la card */
 .gallery .card__content {
   width: 100%;
   height: 20%;
@@ -151,11 +152,14 @@ video::-webkit-media-controls {
   gap: var(--spacing__xs);
   padding: var(--spacing__xs);
   font-family: "PPValve" !important;
+  color: var(--clr__accent);
 }
 
-.gallery .card__content .card__logo {
+.gallery .card__content .card__logo,
+.card__creator img {
   height: 20px !important;
   width: 20px !important;
+  border-radius: 999px;
   overflow: hidden;
   display: flex;
   align-items: center;
@@ -169,19 +173,41 @@ video::-webkit-media-controls {
   border-radius: 999px;
 }
 
-.card__app {
+.card__app,
+.card__reel {
   grid-row: span 2;
   height: 100% !important;
 }
+
 /* Media dans la card (video ou image) */
-.card__app .card__media {
+.card__app .card__media,
+.card__reel .card__media {
   position: relative;
   width: 100%;
   height: 100% !important;
   border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--clr__text-fade);
 }
 
-.card__app .card__content {
+.card__creators a {
+  height: 20px;
+  width: 20px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  text-transform: uppercase;
+  border-radius: 99px;
+  background-color: var(--clr__background);
+  color: var(--clr__text);
+}
+
+.card__app .card__content,
+.card__reel .card__content {
   width: 100%;
   height: 10% !important;
   display: flex;
@@ -197,6 +223,16 @@ video::-webkit-media-controls {
   height: 100%;
   object-fit: cover;
   border-radius: 12px;
+  user-select: none !important;
+  pointer-events: none !important;
+}
+
+.gallery .card__app .card__media img,
+.gallery .card__app .card__media video {
+  width: 90%;
+  height: 90%;
+  object-fit: contain;
+  border-radius: 25px;
   user-select: none !important;
   pointer-events: none !important;
 }
@@ -224,7 +260,7 @@ video::-webkit-media-controls {
 
 .filter-btn {
   background-color: var(--clr__button-bg);
-  color: var(--clr__text);
+  color: var(--clr__accent);
   border: 1px solid var(--clr__text-fade);
   border-radius: 6px;
   padding: var(--spacing__xs) 12px;

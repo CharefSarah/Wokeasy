@@ -15,27 +15,29 @@ jobs:
 
       - name: Récupérer les flux RSS et générer le JSON
         run: |
-          echo "{
-            \"lastUpdate\": \"$(date -u +"%Y-%m-%dT%H:%M:%SZ")\",
-            \"projects\": [" > data.json
+          echo "{\n  \"lastUpdate\": \"$(date -u +"%Y-%m-%dT%H:%M:%SZ")\",\n  \"projects\": [" > data.json
 
-          FEEDS=("https://feeds.feedburner.com/awwwards-sites-of-the-day")
+          FEEDS=(
+            "https://feeds.feedburner.com/awwwards-sites-of-the-day"
+            "https://feeds.feedburner.com/awwwards-nominations"
+          )
 
           for FEED in "${FEEDS[@]}"; do
             echo "Fetching: $FEED"
             RSS=$(curl -s "$FEED")
 
-            ITEMS=$(echo "$RSS" | grep -oP '(?<=<item>).*?(?=</item>)' | head -10)
+            ITEMS=$(echo "$RSS" | grep -oP '(?<=<item>).*?(?=</item>)' | head -6) # 1 site du jour + 5 nominés
 
             while read -r ITEM; do
               TITLE=$(echo "$ITEM" | grep -oP '(?<=<title>).*?(?=</title>)' | sed 's/"/\\"/g')
               LINK=$(echo "$ITEM" | grep -oP '(?<=<link>).*?(?=</link>)' | sed 's/"/\\"/g')
-
-              # 🔥 Extraction de l'image du projet
               IMAGE=$(echo "$ITEM" | grep -oP "(?<=<img src=')[^']+" | head -1)
-              IMAGE=${IMAGE:-"null"} # Si pas d'image, mettre "null"
+              IMAGE=${IMAGE:-"null"}
+              CREATOR_NAME=$(echo "$ITEM" | grep -oP '(?<=<creator>).*?(?=</creator>)' | sed 's/"/\\"/g')
+              CREATOR_LINK=$(echo "$ITEM" | grep -oP '(?<=<creatorLink>).*?(?=</creatorLink>)' | sed 's/"/\\"/g')
+              CREATOR_AVATAR=$(echo "$ITEM" | grep -oP '(?<=<creatorAvatar>).*?(?=</creatorAvatar>)' | sed 's/"/\\"/g')
 
-              echo "    {\"title\": \"$TITLE\", \"link\": \"$LINK\", \"category\": \"null\", \"colors\": [], \"styles\": [], \"logo\": \"null\", \"image\": \"$IMAGE\", \"video\": \"null\"}," >> data.json
+              echo "    {\"title\": \"$TITLE\", \"link\": \"$LINK\", \"category\": \"null\", \"colors\": [], \"styles\": [], \"logo\": \"null\", \"image\": \"$IMAGE\", \"video\": \"null\", \"creators\": [{ \"name\": \"$CREATOR_NAME\", \"link\": \"$CREATOR_LINK\", \"avatar\": \"$CREATOR_AVATAR\" }] }," >> data.json
             done <<< "$ITEMS"
           done
 
@@ -47,12 +49,11 @@ jobs:
           git config --global user.name "github-actions"
           git config --global user.email "actions@github.com"
 
-          # ✅ Ajout de cette ligne pour forcer l'ajout des fichiers avant le pull
           git add .
           git commit -m "Sauvegarde des modifications avant pull" || echo "Aucune modification à commit"
 
           git pull --rebase https://x-access-token:${{ secrets.GH_PAT }}@github.com/CharefSarah/Wokeasy.git
 
           git add data.json
-          git commit -m "Mise à jour automatique du flux RSS avec images" || echo "Aucune modification"
+          git commit -m "Mise à jour automatique du flux RSS avec créateurs et images" || echo "Aucune modification"
           git push https://x-access-token:${{ secrets.GH_PAT }}@github.com/CharefSarah/Wokeasy.git
