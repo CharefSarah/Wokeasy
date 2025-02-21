@@ -26,6 +26,9 @@
 .body__inspiration {
   padding-inline: var(--spacing__lg);
 }
+.search__container:last-child {
+  margin-top: var(--spacing__lg);
+}
 .search__container__grid {
   display: flex;
   flex-direction: row;
