@@ -133,29 +133,26 @@ document.addEventListener("DOMContentLoaded", function () {
       nameDiv.className = "card__name";
       nameDiv.textContent = proj.name;
 
-      const creatorsDiv = document.createElement("div");
-      creatorsDiv.className = "card__creators";
-      proj.creators.forEach((creator) => {
-        const creatorLink = document.createElement("a");
-        creatorLink.href = creator.link || "#";
-        creatorLink.target = "_blank"; // Ajout de l'attribut target
-        creatorLink.className = "card__creator";
-        if (creator.avatar) {
-          const avatarImg = document.createElement("img");
-          avatarImg.src = creator.avatar;
-          creatorLink.appendChild(avatarImg);
-        } else {
-          const placeholder = document.createElement("div");
-          placeholder.className = "creator__placeholder";
-          placeholder.textContent = creator.name.charAt(0).toUpperCase();
-          creatorLink.appendChild(placeholder);
-        }
-        creatorsDiv.appendChild(creatorLink);
-      });
-
-      // Inverser l'ordre des éléments
       contentDiv.appendChild(nameDiv);
-      contentDiv.appendChild(creatorsDiv);
+
+      // Ajouter les créateurs uniquement pour les projets créés manuellement
+      if (proj.creators && proj.creators.length > 0) {
+        const creatorsDiv = document.createElement("div");
+        creatorsDiv.className = "card__creators";
+        proj.creators.forEach((creator) => {
+          if (creator.link && creator.avatar) {
+            const creatorLink = document.createElement("a");
+            creatorLink.href = creator.link;
+            creatorLink.target = "_blank"; // Ajout de l'attribut target
+            creatorLink.className = "card__creator";
+            const avatarImg = document.createElement("img");
+            avatarImg.src = creator.avatar;
+            creatorLink.appendChild(avatarImg);
+            creatorsDiv.appendChild(creatorLink);
+          }
+        });
+        contentDiv.appendChild(creatorsDiv);
+      }
 
       card.appendChild(mediaDiv);
       card.appendChild(contentDiv);
@@ -180,7 +177,6 @@ document.addEventListener("DOMContentLoaded", function () {
           logo: proj.logo !== "null" ? proj.logo : "assets/images/avatar.png",
           image: proj.image !== "null" ? proj.image : null,
           video: proj.video !== "null" ? proj.video : null,
-          creators: proj.creators || [],
           format: proj.format || "standard",
         })),
       ];

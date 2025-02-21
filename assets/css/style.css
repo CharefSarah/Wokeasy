@@ -479,6 +479,12 @@ video::-webkit-media-controls {
 .card__name a:hover {
   color: var(--clr__text);
 }
+.card__creators img {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  object-fit: cover;
+}
 
 /* ------------------------------------- */
 /* ---------- SECTION RESSOURCES ------- */
