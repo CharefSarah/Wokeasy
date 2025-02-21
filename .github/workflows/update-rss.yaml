@@ -15,7 +15,7 @@ jobs:
 
       - name: Fetch RSS feeds and generate JSON
         run: |
-          echo "{\n  \"lastUpdate\": \"$(date -u +"%Y-%m-%dT%H:%M:%SZ")\",\n  \"projects\": [" > data.json
+          echo "{\"lastUpdate\": \"$(date -u +"%Y-%m-%dT%H:%M:%SZ")\", \"projects\": [" > data.json
 
           FEEDS=(
             "https://feeds.feedburner.com/awwwards-sites-of-the-day"
@@ -51,6 +51,9 @@ jobs:
           # Remove the trailing comma and close the JSON
           sed -i '$ s/,$//' data.json
           echo "]}" >> data.json
+
+          # Debug: Print the generated JSON
+          cat data.json
 
       - name: Commit and push changes
         run: |
