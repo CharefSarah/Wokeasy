@@ -221,6 +221,12 @@ body {
   border-radius: 6px;
   cursor: pointer;
 }
+.search__suggestions .search__trigger {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
 
 /* ------------------------------------- */
 /* ----------- THEME TOGGLE ------------ */
@@ -465,7 +471,7 @@ video::-webkit-media-controls {
   width: 100%;
   height: 15%;
   display: flex;
-  flex-direction: row-reverse !important;
+  flex-direction: row;
   align-items: start;
   justify-content: start;
 }
@@ -480,6 +486,20 @@ video::-webkit-media-controls {
   color: var(--clr__text);
 }
 .card__creators img {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+.card__content,
+.card__logo {
+  height: 100%;
+  width: auto;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.card__content .card__logo img {
   width: 30px;
   height: 30px;
   border-radius: 50%;
