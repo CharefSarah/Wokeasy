@@ -13,13 +13,27 @@ jobs:
       - name: Checkout the repo
         uses: actions/checkout@v3
 
+      - name: Install jq
+        run: sudo apt-get update && sudo apt-get install -y jq
+
       - name: Fetch RSS feeds and generate JSON
         run: |
+          # Fetch existing data if present
+          if [ -f data.json ]; then
+            EXISTING_DATA=$(cat data.json | jq '.projects[]')
+          else
+            EXISTING_DATA=""
+          fi
+
+          # Start new JSON
           echo "{\"lastUpdate\": \"$(date -u +"%Y-%m-%dT%H:%M:%SZ")\", \"projects\": [" > data.json
+          if [ ! -z "$EXISTING_DATA" ]; then
+            echo "$EXISTING_DATA," >> data.json
+          fi
 
           FEEDS=(
             "https://feeds.feedburner.com/awwwards-sites-of-the-day"
-            "https://feeds.feedburner.com/awwwards-nominations"
+            "https://feeds.feedburner.com/awwwards"
           )
 
           for FEED in "${FEEDS[@]}"; do
@@ -48,9 +62,6 @@ jobs:
               # Extraction correcte de l'image
               IMAGE=$(echo "$ITEM" | grep -oP "(?<=<img src=')[^']+" | head -1)
               IMAGE=${IMAGE:-"null"}
-
-              # Vérifier si l'image est bien extraite
-              echo "Extracted image: $IMAGE"
 
               # Extraire le créateur
               CREATOR_NAME=$(echo "$ITEM" | grep -oP '(?<=<dc:creator>).*?(?=</dc:creator>)' | sed 's/"/\\"/g')
