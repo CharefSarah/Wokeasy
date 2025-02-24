@@ -2,8 +2,8 @@ name: Update RSS Feeds
 
 on:
   schedule:
-    - cron: "0 6 * * *" # Runs every day at 6 AM
-  workflow_dispatch: # Allows manual triggering
+    - cron: "0 6 * * *"
+  workflow_dispatch:
 
 jobs:
   update-json:
@@ -18,79 +18,62 @@ jobs:
 
       - name: Fetch RSS feeds and generate JSON
         run: |
-          # Fetch existing data if present
-          if [ -f data.json ]; then
-            EXISTING_DATA=$(cat data.json | jq '.projects[] | @base64')
-          else
-            EXISTING_DATA=""
-          fi
-
-          # Start new JSON
+          # Initialize JSON file
           echo "{\"lastUpdate\": \"$(date -u +"%Y-%m-%dT%H:%M:%SZ")\", \"projects\": [" > data.json
-          if [ ! -z "$EXISTING_DATA" ]; then
-            echo $EXISTING_DATA | while read -r line; do
-              echo "$line" | base64 --decode >> data.json
-              echo "," >> data.json  # Always add a comma after an existing item
-            done
-          fi
 
           FEEDS=(
             "https://feeds.feedburner.com/awwwards-sites-of-the-day"
-            "https://feeds.feedburner.com/awwwards"
+            "https://feeds.feedburner.com/awwwards-nominations"
           )
 
-          FIRST_ITEM=true
+          FIRST=true
           for FEED in "${FEEDS[@]}"; do
             echo "Fetching: $FEED"
             RSS=$(curl -s "$FEED")
 
-            # Check if RSS was successfully retrieved
             if [ -z "$RSS" ]; then
-              echo "Erreur: Impossible de récupérer le flux RSS de $FEED"
+              echo "Failed to fetch RSS feed from $FEED"
               continue
             fi
 
-            # Extract items (1 site of the day + 5 nominees)
+            # Extract items, expecting up to 6
             ITEMS=$(echo "$RSS" | grep -oP '(?<=<item>).*?(?=</item>)' | head -6)
 
-            # Check if any items were retrieved
             if [ -z "$ITEMS" ]; then
-              echo "Erreur: Aucun élément <item> trouvé dans $FEED"
+              echo "No items found in feed $FEED"
               continue
             fi
 
             while read -r ITEM; do
-              if [ "$FIRST_ITEM" = false ]; then
+              if [ "$FIRST" = false ]; then
                 echo "," >> data.json
               fi
-              FIRST_ITEM=false
+              FIRST=false
+              
               TITLE=$(echo "$ITEM" | grep -oP '(?<=<title>).*?(?=</title>)' | sed 's/"/\\"/g')
               LINK=$(echo "$ITEM" | grep -oP '(?<=<link>).*?(?=</link>)' | sed 's/"/\\"/g')
               IMAGE=$(echo "$ITEM" | grep -oP "(?<=<img src=')[^']+" | head -1)
               IMAGE=${IMAGE:-"null"}
+
               CREATOR_NAME=$(echo "$ITEM" | grep -oP '(?<=<dc:creator>).*?(?=</dc:creator>)' | sed 's/"/\\"/g')
               CREATOR_NAME=${CREATOR_NAME:-"Unknown"}
               CREATOR_LINK=$(echo "$ITEM" | grep -oP '(?<=<creatorLink>).*?(?=</creatorLink>)' | sed 's/"/\\"/g')
               CREATOR_LINK=${CREATOR_LINK:-"null"}
               CREATOR_AVATAR=$(echo "$ITEM" | grep -oP '(?<=<creatorAvatar>).*?(?=</creatorAvatar>)' | sed 's/"/\\"/g')
               CREATOR_AVATAR=${CREATOR_AVATAR:-"null"}
-              # Add to JSON
-              echo "    {\"title\": \"$TITLE\", \"link\": \"$LINK\", \"category\": \"null\", \"colors\": [], \"styles\": [], \"logo\": \"null\", \"image\": \"$IMAGE\", \"video\": \"null\", \"creators\": [{ \"name\": \"$CREATOR_NAME\", \"link\": \"$CREATOR_LINK\", \"avatar\": \"$CREATOR_AVATAR\" }]}" >> data.json
+
+              # Append this item to JSON
+              echo "    {\"title\": \"$TITLE\", \"link\": \"$LINK\", \"image\": \"$IMAGE\", \"creators\": [{\"name\": \"$CREATOR_NAME\", \"link\": \"$CREATOR_LINK\", \"avatar\": \"$CREATOR_AVATAR\"}]}" >> data.json
             done <<< "$ITEMS"
           done
 
-          # Close the JSON array and object
+          # Close JSON array and object
           echo "]}" >> data.json
-
-          # Display the generated JSON for verification
-          cat data.json
 
       - name: Commit and push changes
         run: |
           git config --global user.name "github-actions"
           git config --global user.email "actions@github.com"
-
           git add data.json
-          git commit -m "Mise à jour automatique du flux RSS avec créateurs et images" || echo "Aucune modification"
-          git pull --rebase https://x-access-token:${{ secrets.GH_PAT }}@github.com/CharefSarah/Wokeasy.git
-          git push https://x-access-token:${{ secrets.GH_PAT }}@github.com/CharefSarah/Wokeasy.git
+          git commit -m "Updated JSON via RSS feeds" || echo "No changes to commit"
+          git push
