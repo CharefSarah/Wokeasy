@@ -1,7 +1,6 @@
 document.addEventListener("DOMContentLoaded", function () {
   const jsonUrl = "https://CharefSarah.github.io/Wokeasy/data.json";
 
-  // Éléments du DOM
   const categoryFiltersContainer = document.getElementById("categoryFilters");
   const searchInput = document.getElementById("searchInput");
   const galleryContainer = document.getElementById("galleryContainer");
@@ -42,6 +41,7 @@ document.addEventListener("DOMContentLoaded", function () {
           avatar: null,
         },
       ],
+      format: "web",
     },
   ];
 
@@ -51,7 +51,6 @@ document.addEventListener("DOMContentLoaded", function () {
   function updateCategories() {
     categories = ["All", ...new Set(allProjects.map((p) => p.category))];
     categoryFiltersContainer.innerHTML = "";
-
     categories.forEach((cat) => {
       const btn = document.createElement("button");
       btn.className = "filter-btn";
@@ -76,8 +75,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     const filtered = allProjects.filter((proj) => {
       const matchCategory =
-        activeCategory === "All" ||
-        proj.category.toLowerCase() === activeCategory.toLowerCase();
+        activeCategory === "All" || proj.category === activeCategory;
       const matchSearch =
         query === "" || proj.name.toLowerCase().includes(query);
       return matchCategory && matchSearch;
@@ -86,8 +84,11 @@ document.addEventListener("DOMContentLoaded", function () {
     filtered.forEach((proj) => {
       const card = document.createElement("div");
       card.className = "card";
-      if (proj.format === "app") card.classList.add("card__app");
-      if (proj.format === "reel") card.classList.add("card__reel");
+      if (proj.format === "app") {
+        card.classList.add("card__app");
+      } else if (proj.format === "reel") {
+        card.classList.add("card__reel");
+      }
 
       const mediaDiv = document.createElement("div");
       mediaDiv.className = "card__media";
@@ -105,54 +106,13 @@ document.addEventListener("DOMContentLoaded", function () {
         mediaDiv.appendChild(img);
       }
 
-      if (proj.bookmarkLink) {
-        const bookmarkLink = document.createElement("a");
-        bookmarkLink.href = proj.bookmarkLink;
-        bookmarkLink.target = "_blank"; // Ajout de l'attribut target
-        bookmarkLink.className = "card__bookmark";
-        bookmarkLink.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-square-arrow-out-up-right"><path d="M21 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h6"/><path d="m21 3-9 9"/><path d="M15 3h6v6"/></svg>`;
-        bookmarkLink.style.position = "absolute";
-        bookmarkLink.style.top = "var(--spacing__xs)";
-        bookmarkLink.style.right = "var(--spacing__xs)";
-        bookmarkLink.style.opacity = "0";
-        bookmarkLink.style.transition = "opacity 0.3s ease";
-        mediaDiv.appendChild(bookmarkLink);
-
-        card.addEventListener("mouseover", () => {
-          bookmarkLink.style.opacity = "1";
-        });
-        card.addEventListener("mouseleave", () => {
-          bookmarkLink.style.opacity = "0";
-        });
-      }
-
       const contentDiv = document.createElement("div");
       contentDiv.className = "card__content";
 
       const nameDiv = document.createElement("div");
       nameDiv.className = "card__name";
       nameDiv.textContent = proj.name;
-
       contentDiv.appendChild(nameDiv);
-
-      // Ajouter les créateurs uniquement pour les projets créés manuellement
-      if (proj.creators && proj.creators.length > 0) {
-        const creatorsDiv = document.createElement("div");
-        creatorsDiv.className = "card__creators";
-        proj.creators.forEach((creator) => {
-          if (creator.link && creator.avatar) {
-            const creatorLink = document.createElement("a");
-            creatorLink.href = creator.link;
-            creatorLink.target = "_blank"; // Ajout de l'attribut target
-            creatorLink.className = "card__creator";
-            const avatarImg = document.createElement("img");
-            avatarImg.src = creator.avatar;
-            creatorLink.appendChild(avatarImg);
-            creatorsDiv.appendChild(creatorLink);
-          }
-        });
-        contentDiv.appendChild(creatorsDiv);
-      }
 
       card.appendChild(mediaDiv);
       card.appendChild(contentDiv);
@@ -164,35 +124,25 @@ document.addEventListener("DOMContentLoaded", function () {
     try {
       const response = await fetch(jsonUrl);
       const data = await response.json();
-      if (!Array.isArray(data.projects)) return;
-
       allProjects = [
         ...allProjects,
         ...data.projects.map((proj) => ({
+          ...proj,
           name: proj.title || "Projet sans titre",
           bookmarkLink: proj.link || "#",
-          category: proj.category !== "null" ? proj.category : "Web",
+          category: proj.category || "Web", // Default to "Web" if no category is defined
           colors: proj.colors || [],
           styles: proj.styles || [],
-          logo: proj.logo !== "null" ? proj.logo : "assets/images/avatar.png",
-          image: proj.image !== "null" ? proj.image : null,
-          video: proj.video !== "null" ? proj.video : null,
-          format: proj.format || "standard",
+          logo: proj.logo || "assets/images/default-logo.png",
+          image: proj.image || "assets/images/default-image.png",
+          video: proj.video || null,
+          format: proj.format || "standard", // Assume 'standard' if not specified
         })),
       ];
-
-      shuffleArray(allProjects);
       updateCategories();
       renderCards();
     } catch (error) {
       console.error("❌ Erreur de chargement du JSON :", error);
-    }
-  }
-
-  function shuffleArray(array) {
-    for (let i = array.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [array[i], array[j]] = [array[j], array[i]];
     }
   }
 
