@@ -106,6 +106,14 @@ document.addEventListener("DOMContentLoaded", function () {
         mediaDiv.appendChild(img);
       }
 
+      const bookmarkLink = document.createElement("a");
+      bookmarkLink.href = proj.bookmarkLink;
+      bookmarkLink.target = "_blank";
+      bookmarkLink.className = "card__bookmark";
+      bookmarkLink.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-square-arrow-out-up-right"><path d="M21 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h6"/><path d="m21 3-9 9"/><path d="M15 3h6v6"/></svg>`; // Ensure you have FontAwesome or similar for the icon
+      bookmarkLink.style.display = "none"; // Initially hide the bookmark
+      mediaDiv.appendChild(bookmarkLink);
+
       const contentDiv = document.createElement("div");
       contentDiv.className = "card__content";
 
@@ -117,6 +125,14 @@ document.addEventListener("DOMContentLoaded", function () {
       card.appendChild(mediaDiv);
       card.appendChild(contentDiv);
       galleryContainer.appendChild(card);
+
+      // Show the bookmark on hover
+      card.addEventListener("mouseenter", () => {
+        bookmarkLink.style.display = "block";
+      });
+      card.addEventListener("mouseleave", () => {
+        bookmarkLink.style.display = "none";
+      });
     });
   }
 
@@ -130,13 +146,13 @@ document.addEventListener("DOMContentLoaded", function () {
           ...proj,
           name: proj.title || "Projet sans titre",
           bookmarkLink: proj.link || "#",
-          category: proj.category || "Web", // Default to "Web" if no category is defined
+          category: proj.category || "Web",
           colors: proj.colors || [],
           styles: proj.styles || [],
           logo: proj.logo || "assets/images/default-logo.png",
           image: proj.image || "assets/images/default-image.png",
           video: proj.video || null,
-          format: proj.format || "standard", // Assume 'standard' if not specified
+          format: proj.format || "standard",
         })),
       ];
       updateCategories();
