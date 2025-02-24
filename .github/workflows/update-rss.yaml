@@ -20,7 +20,7 @@ jobs:
         run: |
           # Fetch existing data if present
           if [ -f data.json ]; then
-            EXISTING_DATA=$(cat data.json | jq '.projects[]')
+            EXISTING_DATA=$(cat data.json | jq '.projects[] | @base64')
           else
             EXISTING_DATA=""
           fi
@@ -28,7 +28,10 @@ jobs:
           # Start new JSON
           echo "{\"lastUpdate\": \"$(date -u +"%Y-%m-%dT%H:%M:%SZ")\", \"projects\": [" > data.json
           if [ ! -z "$EXISTING_DATA" ]; then
-            echo "$EXISTING_DATA," >> data.json
+            echo $EXISTING_DATA | while read -r line; do
+              echo "$line" | base64 --decode >> data.json
+              echo "," >> data.json  # Always add a comma after an existing item
+            done
           fi
 
           FEEDS=(
@@ -36,51 +39,50 @@ jobs:
             "https://feeds.feedburner.com/awwwards"
           )
 
+          FIRST_ITEM=true
           for FEED in "${FEEDS[@]}"; do
             echo "Fetching: $FEED"
             RSS=$(curl -s "$FEED")
 
-            # Vérifier si le RSS est bien récupéré
+            # Check if RSS was successfully retrieved
             if [ -z "$RSS" ]; then
               echo "Erreur: Impossible de récupérer le flux RSS de $FEED"
               continue
             fi
 
-            # Extraire les items (1 site of the day + 5 nominees)
+            # Extract items (1 site of the day + 5 nominees)
             ITEMS=$(echo "$RSS" | grep -oP '(?<=<item>).*?(?=</item>)' | head -6)
 
-            # Vérifier si des items sont récupérés
+            # Check if any items were retrieved
             if [ -z "$ITEMS" ]; then
               echo "Erreur: Aucun élément <item> trouvé dans $FEED"
               continue
             fi
 
             while read -r ITEM; do
+              if [ "$FIRST_ITEM" = false ]; then
+                echo "," >> data.json
+              fi
+              FIRST_ITEM=false
               TITLE=$(echo "$ITEM" | grep -oP '(?<=<title>).*?(?=</title>)' | sed 's/"/\\"/g')
               LINK=$(echo "$ITEM" | grep -oP '(?<=<link>).*?(?=</link>)' | sed 's/"/\\"/g')
-
-              # Extraction correcte de l'image
               IMAGE=$(echo "$ITEM" | grep -oP "(?<=<img src=')[^']+" | head -1)
               IMAGE=${IMAGE:-"null"}
-
-              # Extraire le créateur
               CREATOR_NAME=$(echo "$ITEM" | grep -oP '(?<=<dc:creator>).*?(?=</dc:creator>)' | sed 's/"/\\"/g')
               CREATOR_NAME=${CREATOR_NAME:-"Unknown"}
               CREATOR_LINK=$(echo "$ITEM" | grep -oP '(?<=<creatorLink>).*?(?=</creatorLink>)' | sed 's/"/\\"/g')
               CREATOR_LINK=${CREATOR_LINK:-"null"}
               CREATOR_AVATAR=$(echo "$ITEM" | grep -oP '(?<=<creatorAvatar>).*?(?=</creatorAvatar>)' | sed 's/"/\\"/g')
               CREATOR_AVATAR=${CREATOR_AVATAR:-"null"}
-
-              # Ajout dans le JSON
-              echo "    {\"title\": \"$TITLE\", \"link\": \"$LINK\", \"category\": \"null\", \"colors\": [], \"styles\": [], \"logo\": \"null\", \"image\": \"$IMAGE\", \"video\": \"null\", \"creators\": [{ \"name\": \"$CREATOR_NAME\", \"link\": \"$CREATOR_LINK\", \"avatar\": \"$CREATOR_AVATAR\" }]}," >> data.json
+              # Add to JSON
+              echo "    {\"title\": \"$TITLE\", \"link\": \"$LINK\", \"category\": \"null\", \"colors\": [], \"styles\": [], \"logo\": \"null\", \"image\": \"$IMAGE\", \"video\": \"null\", \"creators\": [{ \"name\": \"$CREATOR_NAME\", \"link\": \"$CREATOR_LINK\", \"avatar\": \"$CREATOR_AVATAR\" }]}" >> data.json
             done <<< "$ITEMS"
           done
 
-          # Supprimer la virgule finale et fermer le JSON
-          sed -i '$ s/,$//' data.json
+          # Close the JSON array and object
           echo "]}" >> data.json
 
-          # Afficher le JSON généré pour vérification
+          # Display the generated JSON for verification
           cat data.json
 
       - name: Commit and push changes
