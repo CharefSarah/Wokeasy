@@ -85,6 +85,12 @@
     grid-template-columns: repeat(2, 1fr);
   }
 }
+/* Sur mobile (~max-width: 600px) : 2 colonnes */
+@media (max-width: 420px) {
+  .gallery {
+    grid-template-columns: repeat(1, 1fr);
+  }
+}
 
 .gallery .card {
   background-color: var(--clr__button-bg);
