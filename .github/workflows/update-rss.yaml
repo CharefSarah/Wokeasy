@@ -16,52 +16,59 @@ jobs:
       - name: Install jq
         run: sudo apt-get update && sudo apt-get install -y jq
 
-      - name: Fetch RSS feeds and update JSON
+      - name: Fetch RSS feeds and generate JSON
         run: |
-          # Fetch existing data
-          if [ -f data.json ]; then
-            cp data.json old_data.json
-          else
-            echo "{\"lastUpdate\": \"\", \"projects\": []}" > old_data.json
-          fi
-
-          echo "{\"lastUpdate\": \"$(date -u +"%Y-%m-%dT%H:%M:%SZ")\", \"projects\": []}" > new_data.json
+          # Initialize JSON file
+          echo "{\"lastUpdate\": \"$(date -u +"%Y-%m-%dT%H:%M:%SZ")\", \"projects\": [" > data.json
 
           FEEDS=(
             "https://feeds.feedburner.com/awwwards-sites-of-the-day"
             "https://feeds.feedburner.com/awwwards-nominations"
           )
 
+          FIRST=true
           for FEED in "${FEEDS[@]}"; do
             echo "Fetching: $FEED"
             RSS=$(curl -s "$FEED")
+
             if [ -z "$RSS" ]; then
               echo "Failed to fetch RSS feed from $FEED"
               continue
             fi
 
-            ITEMS=$(echo "$RSS" | grep -oP '(?<=<item>).*?(?=</item>)' | head -15) # Adjust to capture more items if possible
+            # Extract items, expecting up to 6
+            ITEMS=$(echo "$RSS" | grep -oP '(?<=<item>).*?(?=</item>)' | head -15)
 
-            echo "$ITEMS" | while read -r ITEM; do
+            if [ -z "$ITEMS" ]; then
+              echo "No items found in feed $FEED"
+              continue
+            fi
+
+            while read -r ITEM; do
+              if [ "$FIRST" = false ]; then
+                echo "," >> data.json
+              fi
+              FIRST=false
+              
               TITLE=$(echo "$ITEM" | grep -oP '(?<=<title>).*?(?=</title>)' | sed 's/"/\\"/g')
               LINK=$(echo "$ITEM" | grep -oP '(?<=<link>).*?(?=</link>)' | sed 's/"/\\"/g')
               IMAGE=$(echo "$ITEM" | grep -oP "(?<=<img src=')[^']+" | head -1)
               IMAGE=${IMAGE:-"null"}
 
-              # Construct a new project entry
-              NEW_PROJECT="{\"title\": \"$TITLE\", \"link\": \"$LINK\", \"image\": \"$IMAGE\"}"
+              CREATOR_NAME=$(echo "$ITEM" | grep -oP '(?<=<dc:creator>).*?(?=</dc:creator>)' | sed 's/"/\\"/g')
+              CREATOR_NAME=${CREATOR_NAME:-"Unknown"}
+              CREATOR_LINK=$(echo "$ITEM" | grep -oP '(?<=<creatorLink>).*?(?=</creatorLink>)' | sed 's/"/\\"/g')
+              CREATOR_LINK=${CREATOR_LINK:-"null"}
+              CREATOR_AVATAR=$(echo "$ITEM" | grep -oP '(?<=<creatorAvatar>).*?(?=</creatorAvatar>)' | sed 's/"/\\"/g')
+              CREATOR_AVATAR=${CREATOR_AVATAR:-"null"}
 
-              # Check for duplicates
-              if ! jq -e ".projects[] | select(.link == \"$LINK\")" old_data.json > /dev/null; then
-                echo "$NEW_PROJECT," >> new_data.json
-              fi
-            done
+              # Append this item to JSON
+              echo "    {\"title\": \"$TITLE\", \"link\": \"$LINK\", \"image\": \"$IMAGE\", \"creators\": [{\"name\": \"$CREATOR_NAME\", \"link\": \"$CREATOR_LINK\", \"avatar\": \"$CREATOR_AVATAR\"}]}" >> data.json
+            done <<< "$ITEMS"
           done
 
-          # Finalize new data
-          echo "]}" >> new_data.json
-          jq -s '.[0].projects += .[1].projects | .[0]' old_data.json new_data.json > data.json
-          jq '.projects |= unique_by(.link)' data.json > temp.json && mv temp.json data.json
+          # Close JSON array and object
+          echo "]}" >> data.json
 
       - name: Commit and push changes
         run: |
