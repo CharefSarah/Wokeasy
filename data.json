@@ -1,149 +1,31 @@
-{
-  "lastUpdate": "2025-02-25T06:15:33Z",
-  "projects": [
-    {
-      "title": "365 — A Year of Cartier",
-      "link": "https://www.awwwards.com/sites/365-a-year-of-cartier-5",
-      "image": "https://www.awwwards.com/awards/submissions/2025/01/6790bcdde6b9b141161454.jpg",
-      "creators": [
-        {
-          "name": "Unknown",
-          "link": "null",
-          "avatar": "null"
-        }
-      ]
-    },
-    {
-      "title": "Arago",
-      "link": "https://www.awwwards.com/sites/arago",
-      "image": "https://www.awwwards.com/awards/submissions/2024/12/675c57657247f924363577.jpg",
-      "creators": [
-        {
-          "name": "Unknown",
-          "link": "null",
-          "avatar": "null"
-        }
-      ]
-    },
-    {
-      "title": "Ford M-Sport Raptor T1+",
-      "link": "https://www.awwwards.com/sites/ford-m-sport-raptor-t1",
-      "image": "https://www.awwwards.com/awards/submissions/2025/01/677fed13ef5b7030829092.png",
-      "creators": [
-        {
-          "name": "Unknown",
-          "link": "null",
-          "avatar": "null"
-        }
-      ]
-    },
-    {
-      "title": "Crazy Creative",
-      "link": "https://www.awwwards.com/sites/crazy-creative",
-      "image": "https://www.awwwards.com/awards/submissions/2025/01/6788568d3e8d0200136520.jpg",
-      "creators": [
-        {
-          "name": "Unknown",
-          "link": "null",
-          "avatar": "null"
-        }
-      ]
-    },
-    {
-      "title": "Ciel Rose",
-      "link": "https://www.awwwards.com/sites/ciel-rose",
-      "image": "https://www.awwwards.com/awards/submissions/2025/02/67a08e6bd074d685433395.png",
-      "creators": [
-        {
-          "name": "Unknown",
-          "link": "null",
-          "avatar": "null"
-        }
-      ]
-    },
-    {
-      "title": "Takamitsu Motoyoshi",
-      "link": "https://www.awwwards.com/sites/takamitsu-motoyoshi",
-      "image": "https://www.awwwards.com/awards/submissions/2025/02/67af2d8d3f8fb260148568.png",
-      "creators": [
-        {
-          "name": "Unknown",
-          "link": "null",
-          "avatar": "null"
-        }
-      ]
-    },
-    {
-      "title": "Henri Heymans '25",
-      "link": "https://www.awwwards.com/sites/henri-heymans-25",
-      "image": "https://www.awwwards.com/awards/submissions/2025/02/67b86463f3f66993332342.jpg",
-      "creators": [
-        {
-          "name": "Unknown",
-          "link": "null",
-          "avatar": "null"
-        }
-      ]
-    },
-    {
-      "title": "365 — A Year of Cartier",
-      "link": "https://www.awwwards.com/sites/365-a-year-of-cartier-5",
-      "image": "https://www.awwwards.com/awards/submissions/2025/01/6790bcdde6b9b141161454.jpg",
-      "creators": [
-        {
-          "name": "Unknown",
-          "link": "null",
-          "avatar": "null"
-        }
-      ]
-    },
-    {
-      "title": "Arago",
-      "link": "https://www.awwwards.com/sites/arago",
-      "image": "https://www.awwwards.com/awards/submissions/2024/12/675c57657247f924363577.jpg",
-      "creators": [
-        {
-          "name": "Unknown",
-          "link": "null",
-          "avatar": "null"
-        }
-      ]
-    },
-    {
-      "title": "Ford M-Sport Raptor T1+",
-      "link": "https://www.awwwards.com/sites/ford-m-sport-raptor-t1",
-      "image": "https://www.awwwards.com/awards/submissions/2025/01/677fed13ef5b7030829092.png",
-      "creators": [
-        {
-          "name": "Unknown",
-          "link": "null",
-          "avatar": "null"
-        }
-      ]
-    },
-    {
-      "title": "Crazy Creative",
-      "link": "https://www.awwwards.com/sites/crazy-creative",
-      "image": "https://www.awwwards.com/awards/submissions/2025/01/6788568d3e8d0200136520.jpg",
-      "creators": [
-        {
-          "name": "Unknown",
-          "link": "null",
-          "avatar": "null"
-        }
-      ]
-    },
-    {
-      "title": "Ciel Rose",
-      "link": "https://www.awwwards.com/sites/ciel-rose",
-      "image": "https://www.awwwards.com/awards/submissions/2025/02/67a08e6bd074d685433395.png",
-      "creators": [
-        {
-          "name": "Unknown",
-          "link": "null",
-          "avatar": "null"
-        }
-      ]
-    }
-  ]
-}
+{"lastUpdate": "2025-02-25T12:16:35Z", "projects": [
+    {"title": "Henri Heymans '25", "link": "https://www.awwwards.com/sites/henri-heymans-25", "image": "https://www.awwwards.com/awards/submissions/2025/02/67b86463f3f66993332342.jpg", "creators": [{"name": "Unknown", "link": "null", "avatar": "null"}]}
+,
+    {"title": "365 — A Year of Cartier", "link": "https://www.awwwards.com/sites/365-a-year-of-cartier-5", "image": "https://www.awwwards.com/awards/submissions/2025/01/6790bcdde6b9b141161454.jpg", "creators": [{"name": "Unknown", "link": "null", "avatar": "null"}]}
+,
+    {"title": "Arago", "link": "https://www.awwwards.com/sites/arago", "image": "https://www.awwwards.com/awards/submissions/2024/12/675c57657247f924363577.jpg", "creators": [{"name": "Unknown", "link": "null", "avatar": "null"}]}
+,
+    {"title": "Ford M-Sport Raptor T1+", "link": "https://www.awwwards.com/sites/ford-m-sport-raptor-t1", "image": "https://www.awwwards.com/awards/submissions/2025/01/677fed13ef5b7030829092.png", "creators": [{"name": "Unknown", "link": "null", "avatar": "null"}]}
+,
+    {"title": "Crazy Creative", "link": "https://www.awwwards.com/sites/crazy-creative", "image": "https://www.awwwards.com/awards/submissions/2025/01/6788568d3e8d0200136520.jpg", "creators": [{"name": "Unknown", "link": "null", "avatar": "null"}]}
+,
+    {"title": "Ciel Rose", "link": "https://www.awwwards.com/sites/ciel-rose", "image": "https://www.awwwards.com/awards/submissions/2025/02/67a08e6bd074d685433395.png", "creators": [{"name": "Unknown", "link": "null", "avatar": "null"}]}
+,
+    {"title": "Takamitsu Motoyoshi", "link": "https://www.awwwards.com/sites/takamitsu-motoyoshi", "image": "https://www.awwwards.com/awards/submissions/2025/02/67af2d8d3f8fb260148568.png", "creators": [{"name": "Unknown", "link": "null", "avatar": "null"}]}
+,
+    {"title": "Ottografie 2025", "link": "https://www.awwwards.com/sites/ottografie-2025", "image": "https://www.awwwards.com/awards/submissions/2025/02/67b4537be1537835850655.jpg", "creators": [{"name": "Unknown", "link": "null", "avatar": "null"}]}
+,
+    {"title": "Noovo", "link": "https://www.awwwards.com/sites/noovo", "image": "https://www.awwwards.com/awards/submissions/2025/01/678aef21e36a6887070618.png", "creators": [{"name": "Unknown", "link": "null", "avatar": "null"}]}
+,
+    {"title": "Zypsy", "link": "https://www.awwwards.com/sites/zypsy-site", "image": "https://www.awwwards.com/awards/submissions/2025/01/6787578541561086161653.jpg", "creators": [{"name": "Unknown", "link": "null", "avatar": "null"}]}
+,
+    {"title": "Lacoste Members Experience", "link": "https://www.awwwards.com/sites/lacoste-members-experience", "image": "https://www.awwwards.com/awards/submissions/2025/01/678fc63468375765686397.png", "creators": [{"name": "Unknown", "link": "null", "avatar": "null"}]}
+,
+    {"title": "Stas Bondar '25", "link": "https://www.awwwards.com/sites/stas-bondar-25", "image": "https://www.awwwards.com/awards/submissions/2025/01/678b6325409be787330860.jpg", "creators": [{"name": "Unknown", "link": "null", "avatar": "null"}]}
+,
+    {"title": "3200 Kelvin", "link": "https://www.awwwards.com/sites/3200-kelvin", "image": "https://www.awwwards.com/awards/submissions/2025/01/678bdc8b8e8ee738263212.png", "creators": [{"name": "Unknown", "link": "null", "avatar": "null"}]}
+,
+    {"title": "Dropbox Brand", "link": "https://www.awwwards.com/sites/dropbox-brand", "image": "https://www.awwwards.com/awards/submissions/2025/01/678983c0a470d597110092.png", "creators": [{"name": "Unknown", "link": "null", "avatar": "null"}]}
+,
+    {"title": "LilFrog", "link": "https://www.awwwards.com/sites/lilfrog", "image": "https://www.awwwards.com/awards/submissions/2025/01/679a84b3b1990410781325.png", "creators": [{"name": "Unknown", "link": "null", "avatar": "null"}]}
+]}
